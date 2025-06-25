@@ -1,0 +1,1090 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dead by Daylight - Character Mastery Hub</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Creepster&family=Nosifer&family=Butcherman&family=Orbitron:wght@400;700;900&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            color: #e0e0e0;
+            font-family: 'Arial', sans-serif;
+            overflow-x: hidden;
+            min-height: 100vh;
+            transition: all 0.8s ease;
+        }
+        
+        /* Theme Backgrounds */
+        .theme-blendette {
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+        }
+        
+        .theme-ace {
+            background: linear-gradient(135deg, #1a1a0a 0%, #2e2a1a 50%, #3e2e16 100%);
+        }
+        
+        .theme-xenomorph {
+            background: linear-gradient(135deg, #0a0f0a 0%, #1a2e1a 50%, #162e21 100%);
+        }
+        
+        .fog-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            animation: fogDrift 20s ease-in-out infinite;
+            transition: all 0.8s ease;
+        }
+        
+        .fog-blendette {
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(255,255,255,0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255,255,255,0.08) 0%, transparent 50%);
+        }
+        
+        .fog-ace {
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(255,215,0,0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255,215,0,0.1) 0%, transparent 50%);
+        }
+        
+        .fog-xenomorph {
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(0,255,100,0.12) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(0,255,100,0.08) 0%, transparent 50%);
+        }
+        
+        @keyframes fogDrift {
+            0%, 100% { transform: translateX(0) translateY(0); }
+            25% { transform: translateX(10px) translateY(-5px); }
+            50% { transform: translateX(-5px) translateY(10px); }
+            75% { transform: translateX(-10px) translateY(-5px); }
+        }
+        
+        /* Exit Gate Switch */
+        .exit-gate-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
+            border: 3px solid #444;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            min-width: 140px;
+        }
+        
+        .gate-label {
+            font-family: 'Butcherman', cursive;
+            color: #ff6b6b;
+            text-align: center;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+            text-shadow: 0 0 5px #ff6b6b;
+        }
+        
+        .exit-gate-switch {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            align-items: center;
+        }
+        
+        .lever-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .gate-lever {
+            width: 80px;
+            height: 40px;
+            background: linear-gradient(145deg, #333, #222);
+            border: 2px solid #555;
+            border-radius: 20px;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: block;
+        }
+        
+        .gate-lever:hover {
+            transform: scale(1.05);
+            border-color: #777;
+        }
+        
+        .gate-lever.active-blendette {
+            border-color: #8b0000;
+            box-shadow: 0 0 15px rgba(139, 0, 0, 0.5);
+            background: linear-gradient(145deg, #4a0000, #2a0000);
+        }
+        
+        .gate-lever.active-ace {
+            border-color: #ffd700;
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+            background: linear-gradient(145deg, #4a4000, #2a2a00);
+        }
+        
+        .gate-lever.active-xenomorph {
+            border-color: #00ff64;
+            box-shadow: 0 0 15px rgba(0, 255, 100, 0.5);
+            background: linear-gradient(145deg, #004a20, #002a10);
+        }
+        
+        .gate-lever::after {
+            content: '';
+            position: absolute;
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(145deg, #666, #444);
+            border-radius: 50%;
+            top: 2px;
+            left: 2px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+        }
+        
+        .gate-lever.active-blendette::after {
+            left: 44px;
+            background: linear-gradient(145deg, #ff4444, #aa0000);
+        }
+        
+        .gate-lever.active-ace::after {
+            left: 44px;
+            background: linear-gradient(145deg, #ffff44, #ddaa00);
+        }
+        
+        .gate-lever.active-xenomorph::after {
+            left: 44px;
+            background: linear-gradient(145deg, #44ff88, #00aa44);
+        }
+        
+        .gate-label-small {
+            font-size: 0.65rem;
+            text-align: center;
+            color: #ccc;
+            font-family: 'Arial', sans-serif;
+            font-weight: bold;
+            margin-top: 3px;
+        }
+        
+        .container {
+            position: relative;
+            z-index: 2;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .hero {
+            text-align: center;
+            padding: 60px 0;
+            position: relative;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px;
+            height: 200px;
+            animation: pulse 3s ease-in-out infinite;
+            transition: all 0.8s ease;
+        }
+        
+        .hero-blendette::before {
+            background: radial-gradient(circle, rgba(139, 0, 0, 0.3) 0%, transparent 70%);
+        }
+        
+        .hero-ace::before {
+            background: radial-gradient(circle, rgba(255, 215, 0, 0.3) 0%, transparent 70%);
+        }
+        
+        .hero-xenomorph::before {
+            background: radial-gradient(circle, rgba(0, 255, 100, 0.3) 0%, transparent 70%);
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: translateX(-50%) scale(1); opacity: 0.3; }
+            50% { transform: translateX(-50%) scale(1.2); opacity: 0.6; }
+        }
+        
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            animation: flicker 2s ease-in-out infinite alternate;
+            transition: all 0.8s ease;
+        }
+        
+        .title-blendette {
+            font-family: 'Nosifer', cursive;
+            color: #8b0000;
+            text-shadow: 0 0 20px #8b0000, 0 0 40px #8b0000;
+        }
+        
+        .title-ace {
+            font-family: 'Orbitron', monospace;
+            font-weight: 900;
+            color: #ffd700;
+            text-shadow: 0 0 20px #ffd700, 0 0 40px #ffd700;
+        }
+        
+        .title-xenomorph {
+            font-family: 'Orbitron', monospace;
+            font-weight: 700;
+            color: #00ff64;
+            text-shadow: 0 0 20px #00ff64, 0 0 40px #00ff64;
+            letter-spacing: 3px;
+        }
+        
+        @keyframes flicker {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+        
+        .hero .subtitle {
+            font-family: 'Butcherman', cursive;
+            font-size: 1.5rem;
+            text-shadow: 0 0 10px currentColor;
+            transition: all 0.8s ease;
+        }
+        
+        .subtitle-blendette { color: #ff6b6b; }
+        .subtitle-ace { color: #ffd700; }
+        .subtitle-xenomorph { color: #00ff64; }
+        
+        .main-quote {
+            border-radius: 15px;
+            padding: 30px;
+            margin: 40px 0;
+            text-align: center;
+            position: relative;
+            transition: all 0.8s ease;
+        }
+        
+        .quote-blendette {
+            background: linear-gradient(45deg, rgba(139, 0, 0, 0.2), rgba(255, 107, 107, 0.1));
+            border: 2px solid #8b0000;
+            box-shadow: 0 0 30px rgba(139, 0, 0, 0.3);
+        }
+        
+        .quote-ace {
+            background: linear-gradient(45deg, rgba(255, 215, 0, 0.2), rgba(255, 215, 0, 0.1));
+            border: 2px solid #ffd700;
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
+        }
+        
+        .quote-xenomorph {
+            background: linear-gradient(45deg, rgba(0, 255, 100, 0.2), rgba(0, 255, 100, 0.1));
+            border: 2px solid #00ff64;
+            box-shadow: 0 0 30px rgba(0, 255, 100, 0.3);
+        }
+        
+        .main-quote::before {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 2rem;
+            background: #0a0a0a;
+            padding: 0 15px;
+            transition: all 0.8s ease;
+        }
+        
+        .quote-blendette::before { content: '👻'; }
+        .quote-ace::before { content: '🎰'; }
+        .quote-xenomorph::before { content: '👽'; }
+        
+        .builds-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin: 60px 0;
+        }
+        
+        .build-card {
+            border-radius: 20px;
+            padding: 25px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .card-blendette {
+            background: linear-gradient(145deg, rgba(26, 26, 46, 0.8), rgba(22, 33, 62, 0.6));
+            border: 2px solid #ff6b6b;
+        }
+        
+        .card-ace {
+            background: linear-gradient(145deg, rgba(46, 42, 26, 0.8), rgba(62, 46, 22, 0.6));
+            border: 2px solid #ffd700;
+        }
+        
+        .card-xenomorph {
+            background: linear-gradient(145deg, rgba(26, 46, 26, 0.8), rgba(22, 62, 33, 0.6));
+            border: 2px solid #00ff64;
+        }
+        
+        .build-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            transform: rotate(45deg);
+            transition: all 0.6s ease;
+            opacity: 0;
+        }
+        
+        .card-blendette::before {
+            background: linear-gradient(45deg, transparent, rgba(255, 107, 107, 0.1), transparent);
+        }
+        
+        .card-ace::before {
+            background: linear-gradient(45deg, transparent, rgba(255, 215, 0, 0.1), transparent);
+        }
+        
+        .card-xenomorph::before {
+            background: linear-gradient(45deg, transparent, rgba(0, 255, 100, 0.1), transparent);
+        }
+        
+        .build-card:hover::before {
+            animation: shimmer 1.5s ease-in-out;
+            opacity: 1;
+        }
+        
+        @keyframes shimmer {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+        
+        .build-card:hover {
+            transform: translateY(-10px) scale(1.02);
+        }
+        
+        .card-blendette:hover {
+            box-shadow: 0 20px 40px rgba(139, 0, 0, 0.4);
+            border-color: #8b0000;
+        }
+        
+        .card-ace:hover {
+            box-shadow: 0 20px 40px rgba(255, 215, 0, 0.4);
+            border-color: #ccaa00;
+        }
+        
+        .card-xenomorph:hover {
+            box-shadow: 0 20px 40px rgba(0, 255, 100, 0.4);
+            border-color: #00cc50;
+        }
+        
+        .build-title {
+            font-size: 1.8rem;
+            text-align: center;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px currentColor;
+            transition: all 0.8s ease;
+        }
+        
+        .title-blendette-build {
+            font-family: 'Creepster', cursive;
+            color: #ff6b6b;
+        }
+        
+        .title-ace-build {
+            font-family: 'Orbitron', monospace;
+            font-weight: 700;
+            color: #ffd700;
+        }
+        
+        .title-xenomorph-build {
+            font-family: 'Orbitron', monospace;
+            font-weight: 700;
+            color: #00ff64;
+        }
+        
+        .perk-list {
+            list-style: none;
+            margin: 15px 0;
+        }
+        
+        .perk-list li {
+            margin: 8px 0;
+            padding: 12px;
+            border-radius: 8px;
+            border-left: 4px solid;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .perk-blendette {
+            background: rgba(139, 0, 0, 0.2);
+            border-left-color: #8b0000;
+        }
+        
+        .perk-ace {
+            background: rgba(255, 215, 0, 0.2);
+            border-left-color: #ffd700;
+        }
+        
+        .perk-xenomorph {
+            background: rgba(0, 255, 100, 0.2);
+            border-left-color: #00ff64;
+        }
+        
+        .perk-blendette:hover {
+            background: rgba(139, 0, 0, 0.4);
+            box-shadow: 0 5px 15px rgba(139, 0, 0, 0.3);
+        }
+        
+        .perk-ace:hover {
+            background: rgba(255, 215, 0, 0.4);
+            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.3);
+        }
+        
+        .perk-xenomorph:hover {
+            background: rgba(0, 255, 100, 0.4);
+            box-shadow: 0 5px 15px rgba(0, 255, 100, 0.3);
+        }
+        
+        .perk-list li:hover {
+            transform: translateX(10px);
+        }
+        
+        .strategy-tip {
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 15px;
+            font-style: italic;
+            transition: all 0.8s ease;
+        }
+        
+        .tip-blendette {
+            background: rgba(255, 107, 107, 0.1);
+            border: 1px solid #ff6b6b;
+        }
+        
+        .tip-ace {
+            background: rgba(255, 215, 0, 0.1);
+            border: 1px solid #ffd700;
+        }
+        
+        .tip-xenomorph {
+            background: rgba(0, 255, 100, 0.1);
+            border: 1px solid #00ff64;
+        }
+        
+        .character-meter {
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            margin: 40px 0;
+            transition: all 0.8s ease;
+        }
+        
+        .meter-blendette {
+            background: #1a1a2e;
+            border: 2px solid #8b0000;
+        }
+        
+        .meter-ace {
+            background: #2e2a1a;
+            border: 2px solid #ffd700;
+        }
+        
+        .meter-xenomorph {
+            background: #1a2e1a;
+            border: 2px solid #00ff64;
+        }
+        
+        .meter-bar {
+            height: 20px;
+            border-radius: 10px;
+            margin: 10px 0;
+            transition: all 0.8s ease;
+        }
+        
+        .bar-blendette {
+            background: linear-gradient(90deg, #8b0000, #ff6b6b, #8b0000);
+            animation: stealthPulse 2s ease-in-out infinite;
+        }
+        
+        .bar-ace {
+            background: linear-gradient(90deg, #ffd700, #ffff99, #ffd700);
+            animation: luckPulse 2s ease-in-out infinite;
+        }
+        
+        .bar-xenomorph {
+            background: linear-gradient(90deg, #00ff64, #66ff99, #00ff64);
+            animation: alienPulse 2s ease-in-out infinite;
+        }
+        
+        @keyframes stealthPulse {
+            0%, 100% { box-shadow: 0 0 5px #8b0000; }
+            50% { box-shadow: 0 0 20px #ff6b6b, 0 0 30px #8b0000; }
+        }
+        
+        @keyframes luckPulse {
+            0%, 100% { box-shadow: 0 0 5px #ffd700; }
+            50% { box-shadow: 0 0 20px #ffff99, 0 0 30px #ffd700; }
+        }
+        
+        @keyframes alienPulse {
+            0%, 100% { box-shadow: 0 0 5px #00ff64; }
+            50% { box-shadow: 0 0 20px #66ff99, 0 0 30px #00ff64; }
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 40px 0;
+            margin-top: 60px;
+            transition: all 0.8s ease;
+        }
+        
+        .footer-blendette { border-top: 2px solid #8b0000; }
+        .footer-ace { border-top: 2px solid #ffd700; }
+        .footer-xenomorph { border-top: 2px solid #00ff64; }
+        
+        .blend-animation {
+            display: inline-block;
+            animation: blend 3s ease-in-out infinite;
+        }
+        
+        @keyframes blend {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.3; transform: scale(0.95); }
+        }
+        
+        .hidden {
+            display: none !important;
+        }
+        
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            .builds-section {
+                grid-template-columns: 1fr;
+            }
+            .exit-gate-container {
+                position: relative;
+                top: 0;
+                right: 0;
+                margin: 0 auto 20px auto;
+                width: fit-content;
+                text-align: center;
+            }
+            .exit-gate-switch {
+                flex-direction: row;
+                justify-content: center;
+                gap: 10px;
+            }
+            .lever-container {
+                margin: 0 5px;
+            }
+        }
+    </style>
+</head>
+<body class="theme-blendette">
+    <div class="fog-overlay fog-blendette"></div>
+    
+    <!-- Exit Gate Switch -->
+    <div class="exit-gate-container">
+        <div class="gate-label">🚪 CHARACTER SELECT 🚪</div>
+        <div class="exit-gate-switch">
+            <div class="lever-container">
+                <div class="gate-lever active-blendette" id="lever-blendette" onclick="switchCharacter('blendette')"></div>
+                <div class="gate-label-small">BLENDETTE</div>
+            </div>
+            <div class="lever-container">
+                <div class="gate-lever" id="lever-ace" onclick="switchCharacter('ace')"></div>
+                <div class="gate-label-small">ACE</div>
+            </div>
+            <div class="lever-container">
+                <div class="gate-lever" id="lever-xenomorph" onclick="switchCharacter('xenomorph')"></div>
+                <div class="gate-label-small">XENOMORPH</div>
+            </div>
+        </div>
+        <!-- Test button to verify JavaScript works -->
+        <div style="margin-top: 10px; text-align: center;">
+            <button onclick="testClick()" style="padding: 5px 10px; background: #333; color: #fff; border: 1px solid #555; border-radius: 5px; cursor: pointer; font-size: 0.7rem;">TEST JS</button>
+        </div>
+    </div>
+    
+    <div class="container">
+        <!-- BLENDETTE CONTENT -->
+        <div id="blendette-content">
+            <div class="hero hero-blendette">
+                <h1 class="title-blendette">THE BLENDETTE SHRINE</h1>
+                <p class="subtitle subtitle-blendette">Master of Stealth • Queen of Shadows • <span class="blend-animation">Invisible Legend</span></p>
+            </div>
+            
+            <div class="main-quote quote-blendette">
+                <h2>Why Claudette Morel (Blendette) Reigns Supreme</h2>
+                <p>"In the fog-shrouded realms of the Entity, where terror lurks behind every corner, one survivor has mastered the ancient art of becoming one with the shadows. Claudette Morel, lovingly known as 'Blendette' by the community, doesn't just survive—she vanishes. Her natural camouflage abilities and botanical expertise make her the ultimate stealth survivor, turning the killer's hunt into a frustrating game of hide-and-seek where she always wins."</p>
+            </div>
+            
+            <div class="character-meter meter-blendette">
+                <h3>🌿 BLENDETTE STEALTH MASTERY LEVEL 🌿</h3>
+                <div class="meter-bar bar-blendette"></div>
+                <p><strong>MAXIMUM STEALTH ACHIEVED</strong><br>
+                "Can you see me? No? Perfect." - Every Blendette Ever</p>
+            </div>
+            
+            <div class="builds-section">
+                <div class="build-card card-blendette">
+                    <h3 class="build-title title-blendette-build">🛡️ ULTIMATE SURVIVAL BUILD</h3>
+                    <h4>Core Perks:</h4>
+                    <ul class="perk-list">
+                        <li class="perk-blendette"><strong>Self-Care</strong> - Claudette's signature perk for unlimited healing</li>
+                        <li class="perk-blendette"><strong>Iron Will</strong> - Silent suffering = invisible suffering</li>
+                        <li class="perk-blendette"><strong>Urban Evasion</strong> - Crouch-walking at light speed</li>
+                        <li class="perk-blendette"><strong>Spine Chill</strong> - Early warning system for maximum stealth</li>
+                    </ul>
+                    <div class="strategy-tip tip-blendette">
+                        <strong>Strategy:</strong> This build turns you into a ghost. Hide in tall grass, heal yourself quietly, and let the killer waste precious time searching for shadows. Your survival rate will be legendary.
+                    </div>
+                </div>
+                
+                <div class="build-card card-blendette">
+                    <h3 class="build-title title-blendette-build">⚡ BLENDETTE GEN RUSH</h3>
+                    <h4>Core Perks:</h4>
+                    <ul class="perk-list">
+                        <li class="perk-blendette"><strong>Prove Thyself</strong> - Team efficiency when they find you</li>
+                        <li class="perk-blendette"><strong>Resilience</strong> - Injured but determined</li>
+                        <li class="perk-blendette"><strong>Spine Chill</strong> - Danger detection while repairing</li>
+                        <li class="perk-blendette"><strong>Technician</strong> - Silent generator work</li>
+                    </ul>
+                    <div class="strategy-tip tip-blendette">
+                        <strong>Strategy:</strong> Be the invisible generator ghost. Work on gens in dark corners, blend into the environment between repairs, and complete objectives while the killer hunts your more visible teammates.
+                    </div>
+                </div>
+                
+                <div class="build-card card-blendette">
+                    <h3 class="build-title title-blendette-build">🎭 MAXIMUM CHAOS FUN BUILD</h3>
+                    <h4>Core Perks:</h4>
+                    <ul class="perk-list">
+                        <li class="perk-blendette"><strong>Diversion</strong> - Throw pebbles to confuse killers</li>
+                        <li class="perk-blendette"><strong>Lucky Break</strong> - Disappear after taking damage</li>
+                        <li class="perk-blendette"><strong>Dance With Me</strong> - No scratch marks after vaults</li>
+                        <li class="perk-blendette"><strong>Lithe</strong> - Burst of speed into stealth mode</li>
+                    </ul>
+                    <div class="strategy-tip tip-blendette">
+                        <strong>Strategy:</strong> This build is pure psychological warfare. Throw pebbles, vanish mid-chase, and watch killers question their sanity as you blend back into the darkness.
+                    </div>
+                </div>
+                
+                <div class="build-card card-blendette">
+                    <h3 class="build-title title-blendette-build">🔦 ANTI-TUNNEL MASTER</h3>
+                    <h4>Core Perks:</h4>
+                    <ul class="perk-list">
+                        <li class="perk-blendette"><strong>Decisive Strike</strong> - Punish tunneling attempts</li>
+                        <li class="perk-blendette"><strong>Off The Record</strong> - Extended protection after unhook</li>
+                        <li class="perk-blendette"><strong>Iron Will</strong> - Stay silent while injured</li>
+                        <li class="perk-blendette"><strong>Shadow Step</strong> - Remove scratch marks in blessed areas</li>
+                    </ul>
+                    <div class="strategy-tip tip-blendette">
+                        <strong>Strategy:</strong> Make tunneling you a nightmare for killers. Use your stealth to break line of sight, then vanish completely while your anti-tunnel perks keep you safe.
+                    </div>
+                </div>
+                
+                <div class="build-card card-blendette">
+                    <h3 class="build-title title-blendette-build">🌟 ALTRUISTIC SHADOW</h3>
+                    <h4>Core Perks:</h4>
+                    <ul class="perk-list">
+                        <li class="perk-blendette"><strong>Borrowed Time</strong> - Protect rescued teammates</li>
+                        <li class="perk-blendette"><strong>We'll Make It</strong> - Fast heals after unhooks</li>
+                        <li class="perk-blendette"><strong>Botany Knowledge</strong> - Claudette's healing expertise</li>
+                        <li class="perk-blendette"><strong>Kindred</strong> - Team information while hooked</li>
+                    </ul>
+                    <div class="strategy-tip tip-blendette">
+                        <strong>Strategy:</strong> Be the team's invisible guardian angel. Use your stealth to position for safe rescues, then heal everyone back to full health while staying hidden.
+                    </div>
+                </div>
+                
+                <div class="build-card card-blendette">
+                    <h3 class="build-title title-blendette-build">👁️ INFORMATION OVERLORD</h3>
+                    <h4>Core Perks:</h4>
+                    <ul class="perk-list">
+                        <li class="perk-blendette"><strong>Bond</strong> - See nearby teammates</li>
+                        <li class="perk-blendette"><strong>Kindred</strong> - Hook information for everyone</li>
+                        <li class="perk-blendette"><strong>Windows of Opportunity</strong> - Know all vault locations</li>
+                        <li class="perk-blendette"><strong>Alert</strong> - Track killer's destructive actions</li>
+                    </ul>
+                    <div class="strategy-tip tip-blendette">
+                        <strong>Strategy:</strong> Become the team's invisible intelligence network. Share information while staying hidden, and always know the perfect escape routes.
+                    </div>
+                </div>
+            </div>
+            
+            <div class="main-quote quote-blendette">
+                <h2>🌿 The Blendette Philosophy 🌿</h2>
+                <p>"Why run when you can hide? Why fight when you can vanish? Blendette doesn't just play Dead by Daylight—she becomes one with the Entity's realm, a whisper in the wind, a shadow among shadows. She is the embodiment of 'work smarter, not harder,' turning the killer's greatest weapon—fear—against them through the simple act of... not being found."</p>
+            </div>
+            
+            <div class="footer footer-blendette">
+                <p style="font-family: 'Butcherman', cursive; font-size: 1.2rem; color: #ff6b6b;">
+                    Remember: A good Blendette is never seen, but always felt... by the killer's growing frustration. 👻
+                </p>
+                <p style="margin-top: 20px; opacity: 0.7;">
+                    "In the fog, we trust. In the shadows, we thrive. Blendette eternal." 🌫️
+                </p>
+            </div>
+        </div>
+
+        <!-- ACE VISCONTI CONTENT -->
+        <div id="ace-content" style="display: none;">
+            <div class="hero hero-ace">
+                <h1 class="title-ace">THE GOLDEN GAMBLER</h1>
+                <p class="subtitle subtitle-ace">Master of Luck • Fortune's Favorite • <span class="blend-animation">The House Always Wins</span></p>
+            </div>
+            
+            <div class="main-quote quote-ace">
+                <h2>Why Ace Visconti is the Ultimate Lucky Survivor</h2>
+                <p>"In the twisted games of the Entity, where survival depends on split-second decisions and random chance, one man has turned probability itself into his weapon. Ace Visconti doesn't just rely on luck—he IS luck. With his golden charm, unshakeable confidence, and perks that bend fate itself, Ace transforms every trial into a high-stakes casino where he's both the player and the house, and the house always wins."</p>
+            </div>
+            
+            <div class="character-meter meter-ace">
+                <h3>🎰 ACE'S FORTUNE METER 🎰</h3>
+                <div class="meter-bar bar-ace"></div>
+                <p><strong>MAXIMUM LUCK ACHIEVED</strong><br>
+                "Lady Luck doesn't just smile on me—she's madly in love." - Ace Visconti</p>
+            </div>
+            
+            <div class="builds-section">
+                <div class="build-card card-ace">
+                    <h3 class="build-title title-ace-build">💰 LUCKY BREAK MASTER</h3>
+                    <h4>Core Perks:</h4>
+                    <ul class="perk-list">
+                        <li class="perk-ace"><strong>Up The Ante</strong> - Ace's signature luck boost for the whole team</li>
+                        <li class="perk-ace"><strong>Lucky Break</strong> - Vanish when injured like a magic trick</li>
+                        <li class="perk-ace"><strong>Slippery Meat</strong> - Escape hooks with style</li>
+                        <li class="perk-ace"><strong>Deliverance</strong> - Self-unhook guaranteed</li>
+                    </ul>
+                    <div class="strategy-tip tip-ace">
+                        <strong>Strategy:</strong> This build maximizes Ace's natural luck. Boost team luck with Up The Ante, disappear with Lucky Break, and pull off miraculous escapes that leave killers wondering if you're cheating fate itself.
+                    </div>
+                </div>
+                
+                <div class="build-card card-ace">
+                    <h3 class="build-title title-ace-build">🎲 HIGH ROLLER GAMBIT</h3>
+                    <h4>Core Perks:</h4>
+                    <ul class="perk-list">
+                        <li class="perk-ace"><strong>Ace In The Hole</strong> - Better item quality from chests</li>
+                        <li class="perk-ace"><strong>Plunderer's Instinct</strong> - Find chests and items easily</li>
+                        <li class="perk-ace"><strong>Appraisal</strong> - Get more from every search</li>
+                        <li class="perk-ace"><strong>Pharmacy</strong> - Guaranteed medical supplies</li>
+                    </ul>
+                    <div class="strategy-tip tip-ace">
+                        <strong>Strategy:</strong> Turn every chest into a jackpot. Ace's luck ensures you find the best items with the best add-ons. You're essentially playing with cheat codes enabled.
+                    </div>
+                </div>
+                
+                <div class="build-card card-ace">
+                    <h3 class="build-title title-ace-build">🃏 ESCAPE ARTIST SUPREME</h3>
+                    <h4>Core Perks:</h4>
+                    <ul class="perk-list">
+                        <li class="perk-ace"><strong>Dead Hard</strong> - Frame-perfect invincibility</li>
+                        <li class="perk-ace"><strong>Sprint Burst</strong> - Instant speed when needed</li>
+                        <li class="perk-ace"><strong>Lightweight</strong> - Tracks disappear faster</li>
+                        <li class="perk-ace"><strong>Quick & Quiet</strong> - Silent vault mastery</li>
+                    </ul>
+                    <div class="strategy-tip tip-ace">
+                        <strong>Strategy:</strong> Channel Ace's smooth operator energy. Chain exhaustion perks perfectly, vault silently, and make every escape look effortless. Pure style points.
+                    </div>
+                </div>
+                
+                <div class="build-card card-ace">
+                    <h3 class="build-title title-ace-build">💎 TEAM FORTUNE BOOST</h3>
+                    <h4>Core Perks:</h4>
+                    <ul class="perk-list">
+                        <li class="perk-ace"><strong>Up The Ante</strong> - Luck boost for everyone</li>
+                        <li class="perk-ace"><strong>Leader</strong> - Team efficiency bonus</li>
+                        <li class="perk-ace"><strong>Open Handed</strong> - Extended aura reading range</li>
+                        <li class="perk-ace"><strong>Kindred</strong> - Information sharing</li>
+                    </ul>
+                    <div class="strategy-tip tip-ace">
+                        <strong>Strategy:</strong> Be the team's good luck charm. Your presence makes everyone more effective, luckier, and better informed. Ace doesn't just win—he makes winners.
+                    </div>
+                </div>
+                
+                <div class="build-card card-ace">
+                    <h3 class="build-title title-ace-build">🎯 CLUTCH PERFORMER</h3>
+                    <h4>Core Perks:</h4>
+                    <ul class="perk-list">
+                        <li class="perk-ace"><strong>Adrenaline</strong> - Endgame power surge</li>
+                        <li class="perk-ace"><strong>Hope</strong> - Final sprint to victory</li>
+                        <li class="perk-ace"><strong>Left Behind</strong> - Solo escape specialist</li>
+                        <li class="perk-ace"><strong>Wake Up!</strong> - Fast gate opening</li>
+                    </ul>
+                    <div class="strategy-tip tip-ace">
+                        <strong>Strategy:</strong> Ace thrives under pressure. This build turns endgame into your moment to shine, with speed and healing when it matters most. The bigger the stakes, the better you perform.
+                    </div>
+                </div>
+                
+                <div class="build-card card-ace">
+                    <h3 class="build-title title-ace-build">🏆 BOLD RISK TAKER</h3>
+                    <h4>Core Perks:</h4>
+                    <ul class="perk-list">
+                        <li class="perk-ace"><strong>No Mither</strong> - High risk, high reward</li>
+                        <li class="perk-ace"><strong>Resilience</strong> - Power when injured</li>
+                        <li class="perk-ace"><strong>Tenacity</strong> - Crawling determination</li>
+                        <li class="perk-ace"><strong>Unbreakable</strong> - Self-recovery mastery</li>
+                    </ul>
+                    <div class="strategy-tip tip-ace">
+                        <strong>Strategy:</strong> For the ultimate gambler who likes impossible odds. Stay permanently injured but gain incredible speed and recovery abilities. Only for the most confident Ace players.
+                    </div>
+                </div>
+            </div>
+            
+            <div class="main-quote quote-ace">
+                <h2>🎰 The Ace Philosophy 🎰</h2>
+                <p>"Life's a gamble, but Ace Visconti doesn't leave anything to chance—he IS the chance. With a wink, a smile, and nerves of steel, he transforms every trial into his personal casino. Whether it's finding the perfect item in a chest, escaping impossible situations, or turning the odds in his team's favor, Ace proves that sometimes the best strategy is having the audacity to believe you can't lose."</p>
+            </div>
+            
+            <div class="footer footer-ace">
+                <p style="font-family: 'Orbitron', monospace; font-size: 1.2rem; color: #ffd700; font-weight: 700;">
+                    Remember: Fortune favors the bold, and nobody's bolder than Ace. 🎲
+                </p>
+                <p style="margin-top: 20px; opacity: 0.7;">
+                    "When life deals you a bad hand, Ace Visconti reshuffles the deck." ♠️♥️♦️♣️
+                </p>
+            </div>
+        </div>
+
+        <!-- XENOMORPH CONTENT -->
+        <div id="xenomorph-content" style="display: none;">
+            <div class="hero hero-xenomorph">
+                <h1 class="title-xenomorph">THE PERFECT ORGANISM</h1>
+                <p class="subtitle subtitle-xenomorph">Ultimate Hunter • Apex Predator • <span class="blend-animation">Biomechanical Terror</span></p>
+            </div>
+            
+            <div class="main-quote quote-xenomorph">
+                <h2>Why The Xenomorph is the Ultimate Killer</h2>
+                <p>"In space, no one can hear you scream—but in the Entity's realm, the Xenomorph ensures that screaming is all survivors can do. Born from the union of biomechanical perfection and predatory instinct, the Xenomorph doesn't just hunt—it evolves, adapts, and dominates. With its tunnel network, tail attacks, and perfect organism design, this apex predator turns every trial into a xenobiological horror show where survival is not just unlikely—it's impossible."</p>
+            </div>
+            
+            <div class="character-meter meter-xenomorph">
+                <h3>👽 XENOMORPH LETHALITY INDEX 👽</h3>
+                <div class="meter-bar bar-xenomorph"></div>
+                <p><strong>PERFECT ORGANISM STATUS ACHIEVED</strong><br>
+                "I admire its purity. A survivor, unclouded by conscience, remorse, or delusions of escape." - Ash (The Alien)</p>
+            </div>
+            
+            <div class="builds-section">
+                <div class="build-card card-xenomorph">
+                    <h3 class="build-title title-xenomorph-build">🔥 TUNNEL NETWORK DOMINATION</h3>
+                    <h4>Core Perks:</h4>
+                    <ul class="perk-list">
+                        <li class="perk-xenomorph"><strong>Alien Instinct</strong> - Xenomorph's signature tracking ability</li>
+                        <li class="perk-xenomorph"><strong>Rapid Brutality</strong> - Faster attacks after hits</li>
+                        <li class="perk-xenomorph"><strong>Ultimate Weapon</strong> - Area detection and screaming</li>
+                        <li class="perk-xenomorph"><strong>Lethal Pursuer</strong> - Early game location intel</li>
+                    </ul>
+                    <div class="strategy-tip tip-xenomorph">
+                        <strong>Strategy:</strong> Maximize your tunnel network efficiency. Use Alien Instinct to track through tunnels, combine with mobility perks to traverse the map like the apex predator you are.
+                    </div>
+                </div>
+                
+                <div class="build-card card-xenomorph">
+                    <h3 class="build-title title-xenomorph-build">⚡ PERFECT ORGANISM AGGRESSION</h3>
+                    <h4>Core Perks:</h4>
+                    <ul class="perk-list">
+                        <li class="perk-xenomorph"><strong>Hex: No One Escapes Death</strong> - Endgame lethality</li>
+                        <li class="perk-xenomorph"><strong>Barbecue & Chilli</strong> - Hunt the next target</li>
+                        <li class="perk-xenomorph"><strong>Enduring</strong> - Reduced stun recovery</li>
+                        <li class="perk-xenomorph"><strong>Spirit Fury</strong> - Break through defenses</li>
+                    </ul>
+                    <div class="strategy-tip tip-xenomorph">
+                        <strong>Strategy:</strong> Pure aggressive hunting. Chain hits efficiently, ignore pallet stuns, and ensure no survivor escapes your biomechanical perfection.
+                    </div>
+                </div>
+                
+                <div class="build-card card-xenomorph">
+                    <h3 class="build-title title-xenomorph-build">🎯 STEALTH APEX PREDATOR</h3>
+                    <h4>Core Perks:</h4>
+                    <ul class="perk-list">
+                        <li class="perk-xenomorph"><strong>Monitor & Abuse</strong> - Reduced terror radius</li>
+                        <li class="perk-xenomorph"><strong>Tinkerer</strong> - Silent generator approaches</li>
+                        <li class="perk-xenomorph"><strong>Hex: Ruin</strong> - Passive generator regression</li>
+                        <li class="perk-xenomorph"><strong>Surveillance</strong> - Track generator progress</li>
+                    </ul>
+                    <div class="strategy-tip tip-xenomorph">
+                        <strong>Strategy:</strong> Become the ultimate stealth predator. Use your tunnel network for silent approaches, catch survivors off-guard like the perfect organism you are.
+                    </div>
+                </div>
+                
+                <div class="build-card card-xenomorph">
+                    <h3 class="build-title title-xenomorph-build">🧬 CONTROL MATRIX</h3>
+                    <h4>Core Perks:</h4>
+                    <ul class="perk-list">
+                        <li class="perk-xenomorph"><strong>Hex: Plaything</strong> - Individual terror management</li>
+                        <li class="perk-xenomorph"><strong>Pentimento</strong> - Hex rebuilding capability</li>
+                        <li class="perk-xenomorph"><strong>Deadlock</strong> - Generator blocking automation</li>
+                        <li class="perk-xenomorph"><strong>Corrupt Intervention</strong> - Early game control</li>
+                    </ul>
+                    <div class="strategy-tip tip-xenomorph">
+                        <strong>Strategy:</strong> Control the trial environment completely. Block generators, manage hexes, and create a web of control that survivors can't escape from.
+                    </div>
+                </div>
+                
+                <div class="build-card card-xenomorph">
+                    <h3 class="build-title title-xenomorph-build">💀 TAIL ATTACK SPECIALIST</h3>
+                    <h4>Core Perks:</h4>
+                    <ul class="perk-list">
+                        <li class="perk-xenomorph"><strong>Save The Best For Last</strong> - Faster attack cooldown</li>
+                        <li class="perk-xenomorph"><strong>Unrelenting</strong> - Reduced missed attack penalty</li>
+                        <li class="perk-xenomorph"><strong>Fire Up</strong> - Progressive speed increase</li>
+                        <li class="perk-xenomorph"><strong>Hex: Blood Favour</strong> - Pallet blocking on hits</li>
+                    </ul>
+                    <div class="strategy-tip tip-xenomorph">
+                        <strong>Strategy:</strong> Perfect your tail attack timing. Chain hits efficiently, reduce cooldowns, and make every strike count with biomechanical precision.
+                    </div>
+                </div>
+                
+                <div class="build-card card-xenomorph">
+                    <h3 class="build-title title-xenomorph-build">🌌 ALIEN INFORMATION NETWORK</h3>
+                    <h4>Core Perks:</h4>
+                    <ul class="perk-list">
+                        <li class="perk-xenomorph"><strong>I'm All Ears</strong> - Track fast actions</li>
+                        <li class="perk-xenomorph"><strong>Discordance</strong> - Multi-survivor detection</li>
+                        <li class="perk-xenomorph"><strong>Spies From The Shadows</strong> - Environmental awareness</li>
+                        <li class="perk-xenomorph"><strong>Whispers</strong> - Proximity detection</li>
+                    </ul>
+                    <div class="strategy-tip tip-xenomorph">
+                        <strong>Strategy:</strong> Create a perfect information network. Know where survivors are at all times, use your tunnel system to respond instantly to any detected activity.
+                    </div>
+                </div>
+            </div>
+            
+            <div class="main-quote quote-xenomorph">
+                <h2>👽 The Xenomorph Philosophy 👽</h2>
+                <p>"The Xenomorph represents evolution's ultimate endpoint: a perfect killing machine unclouded by conscience, remorse, or delusions of mercy. It doesn't hunt for sport or survival—it hunts because hunting is its nature, its purpose, its very essence. In the Entity's realm, it has found the perfect environment: an endless supply of prey, infinite opportunities to perfect its killing technique, and a cosmic force that appreciates true predatory artistry."</p>
+            </div>
+            
+            <div class="footer footer-xenomorph">
+                <p style="font-family: 'Orbitron', monospace; font-size: 1.2rem; color: #00ff64; font-weight: 700;">
+                    Remember: In space, no one can hear you scream. In the Entity's realm, screaming is the point. 👽
+                </p>
+                <p style="margin-top: 20px; opacity: 0.7;">
+                    "Perfect organism. Its structural perfection is matched only by its hostility." 🧬
+                </p>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        var currentCharacter = 'blendette';
+        
+        // Character switching functionality
+        function switchCharacter(character) {
+            // Force update regardless of current character
+            currentCharacter = character;
+            
+            // Hide all content sections
+            var blendette = document.getElementById('blendette-content');
+            var ace = document.getElementById('ace-content');
+            var xenomorph = document.getElementById('xenomorph-content');
+            
+            if (blendette) blendette.style.display = 'none';
+            if (ace) ace.style.display = 'none';
+            if (xenomorph) xenomorph.style.display = 'none';
+            
+            // Show selected content
+            var selected = document.getElementById(character + '-content');
+            if (selected) selected.style.display = 'block';
+            
+            // Update body theme
+            document.body.className = 'theme-' + character;
+            
+            // Update fog overlay
+            var fog = document.querySelector('.fog-overlay');
+            if (fog) fog.className = 'fog-overlay fog-' + character;
+            
+            // Update all levers to inactive state
+            var levers = document.querySelectorAll('.gate-lever');
+            for (var i = 0; i < levers.length; i++) {
+                levers[i].className = 'gate-lever';
+            }
+            
+            // Activate the clicked lever
+            var activeLever = document.getElementById('lever-' + character);
+            if (activeLever) {
+                activeLever.className = 'gate-lever active-' + character;
+            }
+        }
+        
+        // Test function to make sure JavaScript is working
+        function testClick() {
+            alert('JavaScript is working!');
+        }
+        
+        // Interactive fog effects
+        document.addEventListener('mousemove', (e) => {
+            const cursor = document.querySelector('.fog-overlay');
+            if (cursor) {
+                const x = e.clientX / window.innerWidth;
+                const y = e.clientY / window.innerHeight;
+                
+                if (currentCharacter === 'blendette') {
+                    cursor.style.background = `
+                        radial-gradient(circle at ${x * 100}% ${y * 100}%, rgba(255,255,255,0.1) 0%, transparent 50%),
+                        radial-gradient(circle at ${(1-x) * 100}% ${(1-y) * 100}%, rgba(255,255,255,0.08) 0%, transparent 50%)
+                    `;
+                } else if (currentCharacter === 'ace') {
+                    cursor.style.background = `
+                        radial-gradient(circle at ${x * 100}% ${y * 100}%, rgba(255,215,0,0.15) 0%, transparent 50%),
+                        radial-gradient(circle at ${(1-x) * 100}% ${(1-y) * 100}%, rgba(255,215,0,0.1) 0%, transparent 50%)
+                    `;
+                } else if (currentCharacter === 'xenomorph') {
+                    cursor.style.background = `
+                        radial-gradient(circle at ${x * 100}% ${y * 100}%, rgba(0,255,100,0.12) 0%, transparent 50%),
+                        radial-gradient(circle at ${(1-x) * 100}% ${(1-y) * 100}%, rgba(0,255,100,0.08) 0%, transparent 50%)
+                    `;
+                }
+            }
+        });
+        
+        // Add click effects to build cards
+        document.querySelectorAll('.build-card').forEach(card => {
+            card.addEventListener('click', () => {
+                card.style.transform = 'scale(0.98)';
+                setTimeout(() => {
+                    card.style.transform = '';
+                }, 150);
+            });
+        });
+        
+        // Enhanced perk hover effects
+        document.querySelectorAll('.perk-list li').forEach(perk => {
+            perk.addEventListener('mouseenter', () => {
+                if (currentCharacter === 'blendette') {
+                    perk.style.textShadow = '0 0 10px #ff6b6b, 0 0 20px #8b0000';
+                } else if (currentCharacter === 'ace') {
+                    perk.style.textShadow = '0 0 10px #ffd700, 0 0 20px #ccaa00';
+                } else if (currentCharacter === 'xenomorph') {
+                    perk.style.textShadow = '0 0 10px #00ff64, 0 0 20px #00cc50';
+                }
+            });
+            
+            perk.addEventListener('mouseleave', () => {
+                perk.style.textShadow = 'none';
+            });
+        });
+    </script>
+</body>
+</html>
