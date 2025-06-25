@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dead by Daylight - Character Mastery Hub</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Creepster&family=Nosifer&family=Butcherman&family=Orbitron:wght@400;700;900&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            color: #e0e0e0;
+            font-family: 'Arial', sans-serif;
+            overflow-x: hidden;
+            min-height: 100vh;
+            transition: all 0.8s ease;
+        }
+        
+        /* Theme Backgrounds */
+        .theme-blendette {
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+        }
+        
+        .theme-ace {
+            background: linear-gradient(135deg, #1a1a0a 0%, #2e2a1a 50%, #3e2e16 100%);
+        }
+        
+        .theme-xenomorph {
+            background: linear-gradient(135deg, #0a0f0a 0%, #1a2e1a 50%, #162e21 100%);
+        }
+        
+        .fog-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            animation: fogDrift 20s ease-in-out infinite;
+            transition: all 0.8s ease;
+        }
+        
+        .fog-blendette {
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(255,255,255,0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255,255,255,0.08) 0%, transparent 50%);
+        }
+        
+        .fog-ace {
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(255,215,0,0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255,215,0,0.1) 0%, transparent 50%);
+        }
+        
+        .fog-xenomorph {
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(0,255,100,0.12) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(0,255,100,0.08) 0%, transparent 50%);
+        }
+        
+        @keyframes fogDrift {
+            0%, 100% { transform: translateX(0) translateY(0); }
+            25% { transform: translateX(10px) translateY(-5px); }
+            50% { transform: translateX(-5px) translateY(10px); }
+            75% { transform: translateX(-10px) translateY(-5px); }
+        }
+        
+        /* Exit Gate Switch */
+        .exit-gate-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
+            border: 3px solid #444;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        
+        .gate-label {
+            font-family: 'Butcherman', cursive;
+            color: #ff6b6b;
+            text-align: center;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+            text-shadow: 0 0 5px #ff6b6b;
+        }
+        
+        .exit-gate-switch {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .gate-lever {
+            width: 80px;
+            height: 40px;
+            background: linear-gradient(145deg, #333, #222);
+            border: 2px solid #555;
+            border-radius: 20px;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .gate-lever.active-blendette {
+            border-color: #8b0000;
+            box-shadow: 0 0 15px rgba(139, 0, 0, 0.5);
+        }
+        
+        .gate-lever.active-ace {
+            border-color: #ffd700;
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+        }
+        
+        .gate-lever.active-xenomorph {
+            border-color: #00ff64;
+            box-shadow: 0 0 15px rgba(0, 255, 100, 0.5);
+        }
+        
+        .gate-lever::after {
+            content: '';
+            position: absolute;
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(145deg, #666, #444);
+            border-radius: 50%;
+            top: 2px;
+            left: 2px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+        }
+        
+        .gate-lever.active-blendette::after {
+            left: 44px;
+            background: linear-gradient(145deg, #8b0000, #660000);
+        }
+        
+        .gate-lever.active-ace::after {
+            left: 44px;
+            background: linear-gradient(145deg, #ffd700, #ccaa00);
+        }
+        
+        .gate-lever.active-xenomorph::after {
+            left: 44px;
+            background: linear-gradient(145deg, #00ff64, #00cc50);
+        }
+        
+        .gate-label-small {
+            font-size: 0.7rem;
+            text-align: center;
+            color: #ccc;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        .container {
+            position: relative;
+            z-index: 2;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .hero {
+            text-align: center;
+            padding: 60px 0;
+            position: relative;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px;
+            height: 200px;
+            animation: pulse 3s ease-in-out infinite;
+            transition: all 0.8s ease;
+        }
+        
+        .hero-blendette::before {
+            background: radial-gradient(circle, rgba(139, 0, 0, 0.3) 0%, transparent 70%);
+        }
+        
+        .hero-ace::before {
+            background: radial-gradient(circle, rgba(255, 215, 0, 0.3) 0%, transparent 70%);
+        }
+        
+        .hero-xenomorph::before {
+            background: radial-gradient(circle, rgba(0, 255, 100, 0.3) 0%, transparent 70%);
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: translateX(-50%) scale(1); opacity: 0.3; }
+            50% { transform: translateX(-50%) scale(1.2); opacity: 0.6; }
+        }
+        
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            animation: flicker 2s ease-in-out infinite alternate;
+            transition: all 0.8s ease;
+        }
+        
+        .title-blendette {
+            font-family: 'Nosifer', cursive;
+            color: #8b0000;
+            text-shadow: 0 0 20px #8b0000, 0 0 40px #8b0000;
+        }
+        
+        .title-ace {
+            font-family: 'Orbitron', monospace;
+            font-weight: 900;
+            color: #ffd700;
+            text-shadow: 0 0 20px #ffd700, 0 0 40px #ffd700;
+        }
+        
+        .title-xenomorph {
+            font-family: 'Orbitron', monospace;
+            font-weight: 700;
+            color: #00ff64;
+            text-shadow: 0 0 20px #00ff64, 0 0 40px #00ff64;
+            letter-spacing: 3px;
+        }
+        
+        @keyframes flicker {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+        
+        .hero .subtitle {
+            font-family: 'Butcherman', cursive;
+            font-size: 1.5rem;
+            text-shadow: 0 0 10px currentColor;
+            transition: all 0.8s ease;
+        }
+        
+        .subtitle-blendette { color: #ff6b6b; }
+        .subtitle-ace { color: #ffd700; }
+        .subtitle-xenomorph { color: #00ff64; }
+        
+        .main-quote {
+            border-radius: 15px;
+            padding: 30px;
+            margin: 40px 0;
+            text-align: center;
+            position: relative;
+            transition: all 0.8s ease;
+        }
+        
+        .quote-blendette {
+            background: linear-gradient(45deg, rgba(139, 0, 0, 0.2), rgba(255, 107, 107, 0.1));
+            border: 2px solid #8b0000;
+            box-shadow: 0 0 30px rgba(139, 0, 0, 0.3);
+        }
+        
+        .quote-ace {
+            background: linear-gradient(45deg, rgba(255, 215, 0, 0.2), rgba(255, 215, 0, 0.1));
+            border: 2px solid #ffd700;
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
+        }
+        
+        .quote-xenomorph {
+            background: linear-gradient(45deg, rgba(0, 255, 100, 0.2), rgba(0, 255, 100, 0.1));
+            border: 2px solid #00ff64;
+            box-shadow: 0 0 30px rgba(0, 255, 100, 0.3);
+        }
+        
+        .main-quote::before {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 2rem;
+            background: #0a0a0a;
+            padding: 0 15px;
+            transition: all 0.8s ease;
+        }
+        
+        .quote-blendette::before { content: '👻'; }
+        .quote-ace::before { content: '🎰'; }
+        .quote-xenomorph::before { content: '👽'; }
+        
+        .builds-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin: 60px 0;
+        }
+        
+        .build-card {
+            border-radius: 20px;
+            padding: 25px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .card-blendette {
+            background: linear-gradient(145deg, rgba(26, 26, 46, 0.8), rgba(22, 33, 62, 0.6));
+            border: 2px solid #ff6b6b;
+        }
+        
+        .card-ace {
+            background: linear-gradient(145deg, rgba(46, 42, 26, 0.8), rgba(62, 46, 22, 0.6));
+            border: 2px solid #ffd700;
+        }
+        
+        .card-xenomorph {
+            background: linear-gradient(145deg, rgba(26, 46, 26, 0.8), rgba(22, 62, 33, 0.6));
+            border: 2px solid #00ff64;
+        }
+        
+        .build-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            transform: rotate(45deg);
+            transition: all 0.6s ease;
+            opacity: 0;
+        }
+        
+        .card-blendette::before {
+            background: linear-gradient(45deg, transparent, rgba(255, 107, 107, 0.1), transparent);
+        }
+        
+        .card-ace::before {
+            background: linear-gradient(45deg, transparent, rgba(255, 215, 0, 0.1), transparent);
+        }
+        
+        .card-xenomorph::before {
+            background: linear-gradient(45deg, transparent, rgba(0, 255, 100, 0.1), transparent);
+        }
+        
+        .build-card:hover::before {
+            animation: shimmer 1.5s ease-in-out;
+            opacity: 1;
+        }
+        
+        @keyframes shimmer {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+        
+        .build-card:hover {
+            transform: translateY(-10px) scale(1.02);
+        }
+        
+        .card-blendette:hover {
+            box-shadow: 0 20px 40px rgba(139, 0, 0, 0.4);
+            border-color: #8b0000;
+        }
+        
+        .card-ace:hover {
+            box-shadow: 0 20px 40px rgba(255, 215, 0, 0.4);
+            border-color: #ccaa00;
+        }
+        
+        .card-xenomorph:hover {
+            box-shadow: 0 20px 40px rgba(0, 255, 100, 0.4);
+            border-color: #00cc50;
+        }
+        
+        .build-title {
+            font-size: 1.8rem;
+            text-align: center;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px currentColor;
+            transition: all 0.8s ease;
+        }
+        
+        .title-blendette-build {
+            font-family: 'Creepster', cursive;
+            color: #ff6b6b;
+        }
+        
+        .title-ace-build {
+            font-family: 'Orbitron', monospace;
+            font-weight: 700;
+            color: #ffd700;
+        }
+        
+        .title-xenomorph-build {
+            font-family: 'Orbitron', monospace;
+            font-weight: 700;
+            color: #00ff64;
+        }
+        
+        .perk-list {
+            list-style: none;
+            margin: 15px 0;
+        }
+        
+        .perk-list li {
+            margin: 8px 0;
+            padding: 12px;
+            border-radius: 8px;
+            border-left: 4px solid;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .perk-blendette {
+            background: rgba(139, 0, 0, 0.2);
+            border-left-color: #8b0000;
+        }
+        
+        .perk-ace {
+            background: rgba(255, 215, 0, 0.2);
+            border-left-color: #ffd700;
+        }
+        
+        .perk-xenomorph {
+            background: rgba(0, 255, 100, 0.2);
+            border-left-color: #00ff64;
+        }
+        
+        .perk-blendette:hover {
+            background: rgba(139, 0, 0, 0.4);
+            box-shadow: 0 5px 15px rgba(139, 0, 0, 0.3);
+        }
+        
+        .perk-ace:hover {
+            background: rgba(255, 215, 0, 0.4);
+            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.3);
+        }
+        
+        .perk-xenomorph:hover {
+            background: rgba(0, 255, 100, 0.4);
+            box-shadow: 0 5px 15px rgba(0, 255, 100, 0.3);
+        }
+        
+        .perk-list li:hover {
+            transform: translateX(10px);
+        }
+        
+        .strategy-tip {
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 15px;
+            font-style: italic;
+            transition: all 0.8s ease;
+        }
+        
+        .tip-blendette {
+            background: rgba(255, 107, 107, 0.1);
+            border: 1px solid #ff6b6b;
+        }
+        
+        .tip-ace {
+            background: rgba(255, 215, 0, 0.1);
+            border: 1px solid #ffd700;
+        }
+        
+        .tip-xenomorph {
+            background: rgba(0, 255, 100, 0.1);
+            border: 1px solid #00ff64;
+        }
+        
+        .character-meter {
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            margin: 40px 0;
+            transition: all 0.8s ease;
+        }
+        
+        .meter-blendette {
+            background: #1a1a2e;
+            border: 2px solid #8b0000;
+        }
+        
+        .meter-ace {
+            background: #2e2a1a;
+            border: 2px solid #ffd700;
+        }
+        
+        .meter-xenomorph {
+            background: #1a2e1a;
+            border: 2px solid #00ff64;
+        }
+        
+        .meter-bar {
+            height: 20px;
+            border-radius: 10px;
+            margin: 10px 0;
+            transition: all 0.8s ease;
+        }
+        
+        .bar-blendette {
+            background: linear-gradient(90deg, #8b0000, #ff6b6b, #8b0000);
+            animation: stealthPulse 2s ease-in-out infinite;
+        }
+        
+        .bar-ace {
+            background: linear-gradient(90deg, #ffd700, #ffff99, #ffd700);
+            animation: luckPulse 2s ease-in-out infinite;
+        }
+        
+        .bar-xenomorph {
+            background: linear-gradient(90deg, #00ff64, #66ff99, #00ff64);
+            animation: alienPulse 2s ease-in-out infinite;
+        }
+        
+        @keyframes stealthPulse {
+            0%, 100% { box-shadow: 0 0 5px #8b0000; }
+            50% { box-shadow: 0 0 20px #ff6b6b, 0 0 30px #8b0000; }
+        }
+        
+        @keyframes luckPulse {
+            0%, 100% { box-shadow: 0 0 5px #ffd700; }
+            50% { box-shadow: 0 0 20px #ffff99, 0 0 30px #ffd700; }
+        }
+        
+        @keyframes alienPulse {
+            0%, 100% { box-shadow: 0 0 5px #00ff64; }
+            50% { box-shadow: 0 0 20px #66ff99, 0 0 30px #00ff64; }
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 40px 0;
+            margin-top: 60px;
+            transition: all 0.8s ease;
+        }
+        
+        .footer-blendette { border-top: 2px solid #8b0000; }
+        .footer-ace { border-top: 2px solid #ffd700; }
+        .footer-xenomorph { border-top: 2px solid #00ff64; }
+        
+        .blend-animation {
+            display: inline-block;
+            animation: blend 3s ease-in-out infinite;
+        }
+        
+        @keyframes blend {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.3; transform: scale(0.95); }
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            .builds-section {
+                grid-template-columns: 1fr;
+            }
+            .exit-gate-container {
+                position: relative;
+                top: 0;
+                right: 0;
+                margin-bottom: 20px;
+                width: 100%;
+                text-align: center;
+            }
+            .exit-gate-switch {
+                flex-direction: row;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body class="theme-blendette">
+    <div class="fog-overlay fog-blendette"></div>
+    
+    <!-- Exit Gate Switch -->
+    <div class="exit-gate-container">
+        <div class="gate-label">🚪 CHARACTER SELECT 🚪</div>
+        <div class="exit-gate-switch">
+            <div>
+                <div class="gate-lever active-blendette" data-character="blendette"></div>
+                <div class="gate-label-small">BLENDETTE</div>
+            </div>
+            <div>
+                <div class="gate-lever" data-character="ace"></div>
+                <div class="gate-label-small">ACE</div>
+            </div>
+            <div>
+                <div class="gate-lever" data-character="xenomorph"></div>
+                <div class="gate-label-small">XENOMORPH</div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="container">
+        <!-- BLENDETTE CONTENT -->
+        <div id="blendette-content">
+            <div class="hero hero-blendette">
+                <h1 class="title-blendette">THE BLENDETTE SHRINE</h1>
+                <p class="subtitle subtitle-blendette">Master of Stealth • Queen of Shadows • <span class="blend-animation">Invisible Legend</span></p>
+            </div>
+            
+            <div class="main-quote quote-blendette">
+                <h2>Why Claudette Morel (Blendette) Reigns Supreme</h2>
+                <p>"In the fog-shrouded realms of the Entity, where terror lurks behind every corner, one survivor has mastered the ancient art of becoming one with the shadows. Claudette Morel, lovingly known as 'Blendette' by the community, doesn't just survive—she vanishes. Her natural camouflage abilities and botanical expertise make her the ultimate stealth survivor, turning the killer's hunt into a frustrating game of hide-and-seek where she always wins."</p>
+            </div>
+            
+            <div class="character-meter meter-blendette">
+                <h3>🌿 BLENDETTE STEALTH MASTERY LEVEL 🌿</h3>
+                <div class="meter-bar bar-blendette"></div>
+                <p><strong>MAXIMUM STEALTH ACHIEVED</strong><br>
+                "Can you see me? No? Perfect." - Every Blendette Ever</p>
+            </div>
+            
+            <div class="builds-section">
+                <div class="build-card card-blendette">
+                    <h3 class="build-title title-blendette-build">🛡️ ULTIMATE SURVIVAL BUILD</h3>
+                    <h4>Core Perks:</h4>
+                    <ul class="perk-list">
+                        <li class="perk-blendette"><strong>Self-Care</strong> - Claudette's signature perk for unlimited healing</li>
+                        <li class="perk-blendette"><strong>Iron Will</strong> - Silent suffering = invisible suffering</li>
+                        <li class="perk-blendette"><strong>Urban Evasion</strong> - Crouch-walking at light speed</li>
+                        <li class="perk-blendette"><strong>Spine Chill</strong> - Early warning system for maximum stealth</li>
+                    </ul>
+                    <div class="strategy-tip tip-blendette">
+                        <strong>Strategy:</strong> This build turns you into a ghost. Hide in tall grass, heal yourself quietly, and let the killer waste precious time searching for shadows. Your survival rate will be legendary.
+                    </div>
+                </div>
+                
+                <div class="build-card card-blendette">
+                    <h3 class="build-title title-blendette-build">⚡ BLENDETTE GEN RUSH</h3>
+                    <h4>Core Perks:</h4>
+                    <ul class="perk-list">
+                        <li class="perk-blendette"><strong>Prove Thyself</strong> - Team efficiency when they find you</li>
+                        <li class="perk-blendette"><strong>Resilience</strong> - Injured but determined</li>
+                        <li class="perk-blendette"><strong>Spine Chill</strong> - Danger detection while repairing</li>
+                        <li class="perk-blendette"><strong>Technician</strong> - Silent generator work</li>
+                    </ul>
+                    <div class="strategy-tip tip-blendette">
+                        <strong>Strategy:</strong> Be the invisible generator ghost. Work on gens in dark corners, blend into the environment between repairs, and complete objectives while the killer hunts your more visible teammates.
+                    </div>
+                </div>
+                
+                <div class="build-card card-blendette">
+                    <h3 class="build-title title-blendette-build">🎭 MAXIMUM CHAOS FUN BUILD</h3>
+                    <h4>Core Perks:</h4>
+                    <ul class="perk-list">
+                        <li class="perk-blendette"><strong>Diversion</strong> - Throw pebbles to confuse killers</li>
+                        <li class="perk-blendette"><strong>Lucky Break</strong> - Disappear after taking damage</li>
+                        <li class="perk-blendette"><strong>Dance With Me</strong> - No scratch marks after vaults</li>
+                        <li class="perk-blendette"><strong>Lithe</strong> - Burst of speed into stealth mode</li>
+                    </ul>
+                    <div class="strategy-tip tip-blendette">
+                        <strong>Strategy:</strong> This build is pure psychological warfare. Throw pebbles, vanish mid-chase, and watch killers question their sanity as you blend back into the darkness.
+                    </div>
+                </div>
+                
+                <div class="build-card card-blendette">
+                    <h3 class="build-title title-blendette-build">🔦 ANTI-TUNNEL MASTER</h3>
+                    <h4>Core Perks:</h4>
+                    <ul class="perk-list">
+                        <li class="perk-blendette"><strong>Decisive Strike</strong> - Punish tunneling attempts</li>
+                        <li class="perk-blendette"><strong>Off The Record</strong> - Extended protection after unhook</li>
+                        <li class="perk-blendette"><strong>Iron Will</strong> - Stay silent while injured</li>
+                        <li class="perk-blendette"><strong>Shadow Step</strong> - Remove scratch marks in blessed areas</li>
+                    </ul>
+                    <div class="strategy-tip tip-blendette">
+                        <strong>Strategy:</strong> Make tunneling you a nightmare for killers. Use your stealth to break line of sight, then vanish completely while your anti-tunnel perks keep you safe.
+                    </div>
+                </div>
+                
+                <div class="build-card card-blendette">
+                    <h3 class="build-title title-blendette-build">🌟 ALTRUISTIC SHADOW</h3>
+                    <h4>Core Perks:</h4>
+                    <ul class="perk-list">
+                        <li class="perk-blendette"><strong>Borrowed Time</strong> - Protect rescued teammates</li>
+                        <li class="perk-blendette"><strong>We'll Make It</strong> - Fast heals after unhooks</li>
+                        <li class="perk-blendette"><strong>Botany Knowledge</strong> - Claudette's healing expertise</li>
+                        <li class="perk-blendette"><strong>Kindred</strong> - Team information while hooked</li>
+                    </ul>
+                    <div class="strategy-tip tip-blendette">
+                        <strong>Strategy:</strong> Be the team's invisible guardian angel. Use your stealth to position for safe rescues, then heal everyone back to full health while staying hidden.
+                    </div>
+                </div>
+                
+                <div class="build-card card-blendette">
+                    <h3 class="build-title title-blendette-build">👁️ INFORMATION OVERLORD</h3>
+                    <h4>Core Perks:</h4>
+                    <ul class="perk-list">
+                        <li class="perk-blendette"><strong>Bond</strong> - See nearby teammates</li>
+                        <li class="perk-blendette"><strong>Kindred</strong> - Hook information for everyone</li>
+                        <li class="perk-blendette"><strong>Windows of Opportunity</strong> - Know all vault locations</li>
+                        <li class="perk-blendette"><strong>Alert</strong> - Track killer's destructive actions</li>
+                    </ul>
+                    <div class="strategy-tip tip-blendette">
+                        <strong>Strategy:</strong> Become the team's invisible intelligence network. Share information while staying hidden, and always know the perfect escape routes.
+                    </div>
+                </div
