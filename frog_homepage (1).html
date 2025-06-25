@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🐸 My Lily Pad Projects</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            background: linear-gradient(135deg, #87CEEB 0%, #98FB98 100%);
+            min-height: 100vh;
+            color: #2d5016;
+            overflow-x: hidden;
+        }
+
+        .pond-container {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 2rem;
+        }
+
+        .lily-pad {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            background: #228B22;
+            border-radius: 50% 0 50% 50%;
+            opacity: 0.3;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .lily-pad:nth-child(1) { top: 10%; left: 15%; animation-delay: 0s; }
+        .lily-pad:nth-child(2) { top: 20%; right: 20%; animation-delay: 2s; }
+        .lily-pad:nth-child(3) { bottom: 30%; left: 10%; animation-delay: 4s; }
+        .lily-pad:nth-child(4) { bottom: 20%; right: 15%; animation-delay: 1s; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .main-content {
+            z-index: 10;
+            text-align: center;
+            max-width: 800px;
+            width: 100%;
+        }
+
+        .frog-header {
+            margin-bottom: 2rem;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-20px); }
+            60% { transform: translateY(-10px); }
+        }
+
+        .frog-emoji {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            display: block;
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
+        }
+
+        h1 {
+            font-size: 3rem;
+            color: #2d5016;
+            text-shadow: 2px 2px 4px rgba(255,255,255,0.8);
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: #4a7c59;
+            margin-bottom: 3rem;
+            font-style: italic;
+        }
+
+        .projects-pond {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border-radius: 25px;
+            padding: 2rem;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            border: 2px solid rgba(255,255,255,0.3);
+            margin-bottom: 2rem;
+        }
+
+        .projects-title {
+            font-size: 2rem;
+            color: #2d5016;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .project-lily-pad {
+            background: linear-gradient(145deg, #90EE90, #32CD32);
+            border-radius: 20px;
+            padding: 1.5rem;
+            text-decoration: none;
+            color: #2d5016;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-lily-pad:hover {
+            transform: translateY(-10px) scale(1.05);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+            background: linear-gradient(145deg, #98FB98, #00FF00);
+        }
+
+        .project-lily-pad::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.3), transparent);
+            transform: rotate(45deg);
+            transition: transform 0.5s ease;
+        }
+
+        .project-lily-pad:hover::before {
+            transform: rotate(45deg) translate(50%, 50%);
+        }
+
+        .project-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .project-emoji {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .project-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .project-description {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            line-height: 1.4;
+        }
+
+        .coming-soon {
+            opacity: 0.6;
+            cursor: not-allowed;
+            background: linear-gradient(145deg, #D3D3D3, #A9A9A9);
+        }
+
+        .coming-soon:hover {
+            transform: none;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .footer-frog {
+            margin-top: 3rem;
+            font-size: 0.9rem;
+            color: #4a7c59;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .ripple {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(0);
+            animation: ripple-animation 2s linear infinite;
+            pointer-events: none;
+        }
+
+        @keyframes ripple-animation {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 2rem; }
+            .frog-emoji { font-size: 3rem; }
+            .projects-pond { padding: 1rem; }
+            .project-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="pond-container">
+        <!-- Floating lily pads in background -->
+        <div class="lily-pad"></div>
+        <div class="lily-pad"></div>
+        <div class="lily-pad"></div>
+        <div class="lily-pad"></div>
+
+        <div class="main-content">
+            <div class="frog-header">
+                <span class="frog-emoji">🐸</span>
+                <h1>Welcome to My Pond</h1>
+                <p class="subtitle">Where creativity hops from lily pad to lily pad</p>
+            </div>
+
+            <div class="projects-pond">
+                <h2 class="projects-title">
+                    <span>🪷</span>
+                    My Project Lily Pads
+                    <span>🪷</span>
+                </h2>
+                
+                <div class="project-grid">
+                    <!-- Active Project - Update the href to point to your HTML file -->
+                    <a href="your-project.html" class="project-lily-pad">
+                        <div class="project-content">
+                            <span class="project-emoji">🎯</span>
+                            <div class="project-title">My First Project</div>
+                            <div class="project-description">
+                                An awesome project ready to explore! Click to dive in.
+                            </div>
+                        </div>
+                    </a>
+
+                    <!-- Coming Soon Projects -->
+                    <div class="project-lily-pad coming-soon">
+                        <div class="project-content">
+                            <span class="project-emoji">🎮</span>
+                            <div class="project-title">Game Project</div>
+                            <div class="project-description">
+                                A fun game is swimming this way soon!
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-lily-pad coming-soon">
+                        <div class="project-content">
+                            <span class="project-emoji">🎨</span>
+                            <div class="project-title">Art Gallery</div>
+                            <div class="project-description">
+                                Creative works hopping into existence...
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-lily-pad coming-soon">
+                        <div class="project-content">
+                            <span class="project-emoji">📚</span>
+                            <div class="project-title">Learning Hub</div>
+                            <div class="project-description">
+                                Educational content making a splash soon!
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-frog">
+                <span>🐸</span>
+                <span>Thanks for visiting my digital pond!</span>
+                <span>🐸</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Add click ripple effect
+        document.addEventListener('click', function(e) {
+            if (e.target.closest('.project-lily-pad') && !e.target.closest('.coming-soon')) {
+                const ripple = document.createElement('div');
+                const rect = e.target.closest('.project-lily-pad').getBoundingClientRect();
+                const size = Math.max(rect.width, rect.height);
+                const x = e.clientX - rect.left - size / 2;
+                const y = e.clientY - rect.top - size / 2;
+                
+                ripple.className = 'ripple';
+                ripple.style.width = ripple.style.height = size + 'px';
+                ripple.style.left = x + 'px';
+                ripple.style.top = y + 'px';
+                
+                e.target.closest('.project-lily-pad').appendChild(ripple);
+                
+                setTimeout(() => ripple.remove(), 2000);
+            }
+        });
+
+        // Add subtle parallax effect to background lily pads
+        document.addEventListener('mousemove', function(e) {
+            const pads = document.querySelectorAll('.lily-pad');
+            const x = e.clientX / window.innerWidth;
+            const y = e.clientY / window.innerHeight;
+            
+            pads.forEach((pad, index) => {
+                const speed = (index + 1) * 0.5;
+                const xMove = (x - 0.5) * speed;
+                const yMove = (y - 0.5) * speed;
+                pad.style.transform = `translate(${xMove}px, ${yMove}px)`;
+            });
+        });
+    </script>
+</body>
+</html>
