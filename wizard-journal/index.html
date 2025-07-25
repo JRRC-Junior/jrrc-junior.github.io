@@ -497,51 +497,18 @@
                 this.renderJournal();
             }
 
+            // Load entries from JSON file
             async loadEntries() {
                 try {
-                    // In a real implementation, this would fetch from entries/entries.json
-                    // For now, we'll use the embedded data
-                    this.entries = [
-                        {
-                            id: 1,
-                            title: "The Awakening of Power",
-                            date: "Sixth Day of Springtide, Year 1126 (January 10, 2025)",
-                            preview: "Upon our arrival in the outer territories of Drakkenheim, I have taken to documenting the intricacies of this fractured realm...",
-                            file: "entry-001.html"
-                        },
-                        {
-                            id: 2,
-                            title: "Into the Cursed Ruins",
-                            date: "Seventh Day of Springtide, Year 1126 (January 15, 2025)",
-                            preview: "We have established our base of operations in Emberwood Village, renting a modest dwelling approximately two hours' ride from the dreaded perimeter of Drakkenheim...",
-                            file: "entry-002.html"
-                        },
-                        {
-                            id: 3,
-                            title: "A Brother's Desperate Plea",
-                            date: "Eigth Day of Mirtul, Year 1492 DR (January 22, 2025)",
-                            preview: "I can barely contain my excitement as I write these words – we have grown considerably in our magical and martial prowess!...",
-                            file: "entry-003.html"
-                        },
-                        {
-                            id: 4,
-                            title: "The Price of Knowledge",
-                            date: "Tenth Day of Mirtul, Year 1492 DR",
-                            preview: "Today I learned that some knowledge comes with a terrible price. We discovered the fate of Archmage Thessarian...",
-                            file: "entry-004.html"
-                        },
-                        {
-                            id: 5,
-                            title: "Bonds Forged in Fire",
-                            date: "Fifteenth Day of Mirtul, Year 1492 DR",
-                            preview: "As I write these words by the flickering light of our campfire, I realize that this adventure has changed me in ways I never expected...",
-                            file: "entry-005.html"
-                        }
-                    ];
-                    
+                    const response = await fetch('entries/entries.json');
+                    const data = await response.json();
+                    this.entries = data.entries;
                     this.filteredEntries = [...this.entries];
                 } catch (error) {
                     console.error('Error loading entries:', error);
+                    // Fallback to embedded entries array
+                    this.entries = [/* your embedded entries */];
+                    this.filteredEntries = [...this.entries];
                 }
             }
 
