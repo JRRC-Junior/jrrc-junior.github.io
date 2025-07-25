@@ -68,7 +68,7 @@
       "id": 5,
       "title": "Mysterious Meetings and Sacred Relics",
       "date": "Ninth Day of Mirtul, Year 1492 DR (April 2, 2025)",
-      "preview": "An intriguing day filled with unexpected opportunities and moral quandaries. We received word that someone called BlackJack Mel wished to meet with us....",
+      "preview": "An intriguing day filled with unexpected opportunities and moral quandaries. We received word that someone called BlackJack Mel wished to meet with us...",
       "file": "entry-005.html",
       "tags": ["Queen's Men", "Blackjack Mel", "Scepter of Saint Vitruvio", "Red Lion Hotel"],
       "session": 5,
@@ -77,6 +77,20 @@
       "locations": ["Emberwood Village", "Chapel of Saint Brenna", "Red Lion Hotel"],
       "characters": ["Ziri", "Calithea", "Daven", "Euphoria", "Blackjack Mel"],
       "themes": ["friendship", "growth", "artifacts", "gambling", "heist"]
+    },
+    {
+      "id": 6,
+      "title": "The Scepter's Shadow",
+      "date": "Tenth Day of Mirtul, Year 1492 DR (April 10, 2025)",
+      "preview": "Today brought revelations that still leave my mind reeling. We witnessed something that challenged everything I thought I knew about the boundaries between life and death. Saint Brenna...",
+      "file": "entry-005.html",
+      "tags": ["Queen's Men", "Blackjack Mel", "Scepter of Saint Vitruvio", "Saint Brenna"],
+      "session": 6,
+      "wordCount": 461,
+      "featured": true,
+      "locations": ["Emberwood Village", "Chapel of Saint Brenna"],
+      "characters": ["Ziri", "Calithea", "Daven", "Euphoria", "Blackjack Mel"],
+      "themes": ["friendship", "growth", "artifacts", "heist"]
     }
   ],
   "tags": {
