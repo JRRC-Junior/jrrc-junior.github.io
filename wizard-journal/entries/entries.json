@@ -162,7 +162,20 @@
       "characters": ["Ziri", "Calithea", "Daven", "Euphoria", "Ironhelm"],
       "themes": ["friendship", "growth", "diplomacy"]
     },
-    
+     {
+      "id": 12,
+      "title": "Triumph and Tragedy",
+      "date": "July 14, 2025",
+      "preview": "What a day of extremes this has been – victory and loss intertwined like the threads of some cruel tapestry. We managed to fell a Chimera today, a beast I had only read about in the dustiest tomes of my academy...",
+      "file": "entry-012.html",
+      "tags": ["Chimera", "Delirium", "Ironhelm Siblings"],
+      "session": 13,
+      "wordCount": 498,
+      "featured": true,
+      "locations": ["Emberwood Village", "Ironhelm Smithy"],
+      "characters": ["Ziri", "Calithea", "Daven", "Euphoria", "Ironhelm", "Petra Lang"],
+      "themes": ["friendship", "growth", "diplomacy"]
+    },
     {
       "id": 13,
       "title": "The Weight of Resurrection",
@@ -171,7 +184,7 @@
       "file": "entry-013.html",
       "tags": ["Resurrection", "Morrigan", "Aegon Ghostweaver", "Delirium"],
       "session": 14,
-      "wordCount": ,
+      "wordCount": 691,
       "featured": true,
       "locations": ["Emberwood Village", "Clearing of Morrigan the Night Mother", "Eckerman Mill"],
       "characters": ["Ziri", "Calithea", "Daven", "Euphoria", "Aegon Ghostweaver", "Aaron Grint", "Ser Paladin Leandros"],
