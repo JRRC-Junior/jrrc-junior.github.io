@@ -67,16 +67,16 @@
     {
       "id": 5,
       "title": "Bonds Forged in Fire",
-      "date": "Fifteenth Day of Mirtul, Year 1492 DR",
-      "preview": "As I write these words by the flickering light of our campfire, I realize that this adventure has changed me in ways I never expected. Not just in terms of magical knowledge – though I have certainly learned much – but in my understanding of companionship and trust...",
+      "date": "Ninth Day of Mirtul, Year 1492 DR (April 2, 2025)",
+      "preview": "An intriguing day filled with unexpected opportunities and moral quandaries. We received word that someone called BlackJack Mel wished to meet with us....",
       "file": "entry-005.html",
-      "tags": ["dragon-cult", "teamwork", "shard-of-binding", "character-development"],
+      "tags": ["Queen's Men", "Blackjack Mel", "Scepter of Saint Vitruvio", "Red Lion Hotel"],
       "session": 5,
-      "wordCount": 720,
+      "wordCount": 353,
       "featured": true,
-      "locations": ["Dragon Cult Treasury"],
-      "characters": ["Cleric Companion", "Fighter Companion", "Dragon Cult Leader"],
-      "themes": ["friendship", "growth", "artifacts", "trust"]
+      "locations": ["Emberwood Village", "Chapel of Saint Brenna", "Red Lion Hotel"],
+      "characters": ["Ziri", "Calithea", "Daven", "Euphoria", "Blackjack Mel"],
+      "themes": ["friendship", "growth", "artifacts", "gambling", "heist"]
     }
   ],
   "tags": {
