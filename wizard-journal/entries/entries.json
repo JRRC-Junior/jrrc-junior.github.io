@@ -127,12 +127,26 @@
       "preview": "What was meant to be a simple dinner invitation to Reed Manor has turned into one of the most harrowing experiences of our adventures thus far. Our goal seemed straightforward enough...",
       "file": "entry-009.html",
       "tags": ["Eldritch Lily", "Delirium", "Aqua Expurgo"],
-      "session": 8,
+      "session": 9,
       "wordCount": 591,
       "featured": true,
       "locations": ["Emberwood Village", "Drakkenheim", "Queen's Park Garden"],
       "characters": ["Ziri", "Calithea", "Daven", "Euphoria", "Blackjack Mel", "Queen of Thieves"],
       "themes": ["friendship", "growth"]
+    },
+    {
+      "id": 10,
+      "title": "The Fruits of Research and New Dangers",
+      "date": "June 26, 2025",
+      "preview": "What was meant to be a simple dinner invitation to Reed Manor has turned into one of the most harrowing experiences of our adventures thus far. Our goal seemed straightforward enough...",
+      "file": "entry-010.html",
+      "tags": ["standing stones", "old druid", "cure contamination"],
+      "session": 11,
+      "wordCount": 372,
+      "featured": true,
+      "locations": ["Emberwood Village", "Old Standing Stones"],
+      "characters": ["Ziri", "Calithea", "Daven", "Euphoria", "Danu Mother Earth"],
+      "themes": ["friendship", "growth", "old gods", "healing"]
     }
   ],
   "tags": {
