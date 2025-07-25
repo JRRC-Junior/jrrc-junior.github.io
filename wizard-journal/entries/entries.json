@@ -91,6 +91,20 @@
       "locations": ["Emberwood Village", "Chapel of Saint Brenna"],
       "characters": ["Ziri", "Calithea", "Daven", "Euphoria", "Blackjack Mel"],
       "themes": ["friendship", "growth", "artifacts", "heist"]
+    },
+    {
+      "id": 7,
+      "title": "The Queen's Web",
+      "date": "Eleventh Day of Mirtul, Year 1492 DR (April 28, 2025)",
+      "preview": "I find myself questioning how much of our business truly remains private in this city. The Queen of Thieves knows far more than she should – Daven's quest for vengeance...",
+      "file": "entry-007.html",
+      "tags": ["Queen's Men", "Blackjack Mel", "Reed Manor", "Oscar Joren"],
+      "session": 6,
+      "wordCount": 494,
+      "featured": true,
+      "locations": ["Reed Manor", "Emberwood Village", "Drakkenheim"],
+      "characters": ["Ziri", "Calithea", "Daven", "Euphoria", "Queen of Thieves", "Oscar Joren", "Petra Lang"],
+      "themes": ["friendship", "growth", "artifacts", "heist"]
     }
   ],
   "tags": {
