@@ -136,8 +136,8 @@
     },
     {
       "id": 10,
-      "title": "The Fruits of Research and New Dangers",
-      "date": "June 26, 2025",
+      "title": "Old Gods and New Alliances",
+      "date": "July 7, 2025",
       "preview": "What was meant to be a simple dinner invitation to Reed Manor has turned into one of the most harrowing experiences of our adventures thus far. Our goal seemed straightforward enough...",
       "file": "entry-010.html",
       "tags": ["standing stones", "old druid", "cure contamination"],
@@ -147,6 +147,20 @@
       "locations": ["Emberwood Village", "Old Standing Stones"],
       "characters": ["Ziri", "Calithea", "Daven", "Euphoria", "Danu Mother Earth"],
       "themes": ["friendship", "growth", "old gods", "healing"]
+    },
+    {
+      "id": 11,
+      "title": "Fractured Loyalties and Writhing Horrors",
+      "date": "July 11, 2025",
+      "preview": "We've made camp early today, as poor Euphoria was utterly spent from yesterday's trials. The exhaustion had settled deep in her bones, and I could see the weariness etched in every line...",
+      "file": "entry-011.html",
+      "tags": ["Gibbering Mouths", "Queen's Men", "Ironhelm Siblings"],
+      "session": 12,
+      "wordCount": 415,
+      "featured": true,
+      "locations": ["Emberwood Village", "Ironhelm Smithy"],
+      "characters": ["Ziri", "Calithea", "Daven", "Euphoria", "Ironhelm"],
+      "themes": ["friendship", "growth", "diplomacy"]
     }
   ],
   "tags": {
