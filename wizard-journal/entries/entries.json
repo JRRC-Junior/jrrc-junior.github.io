@@ -45,7 +45,7 @@
       "tags": ["level-up", "rescue-mission", "ratnest-tavern", "ratlings", "sewers"],
       "session": 3,
       "wordCount": 850,
-      "featured": false,
+      "featured": true,
       "locations": ["Ratnest Tavern", "Sewers"],
       "characters": ["Lang Brother", "Ratling Prince", "Ziri"],
       "themes": ["growth", "combat", "tactics"]
@@ -73,7 +73,7 @@
       "tags": ["dragon-cult", "teamwork", "shard-of-binding", "character-development"],
       "session": 5,
       "wordCount": 720,
-      "featured": false,
+      "featured": true,
       "locations": ["Dragon Cult Treasury"],
       "characters": ["Cleric Companion", "Fighter Companion", "Dragon Cult Leader"],
       "themes": ["friendship", "growth", "artifacts", "trust"]
