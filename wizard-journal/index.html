@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Arcane Chronicles - Wizard's Journal</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Crimson Text', serif;
+            background: radial-gradient(ellipse at center, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            min-height: 100vh;
+            color: #f4f1e8;
+            overflow-x: hidden;
+        }
+
+        /* Animated stars background */
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: #fff;
+            border-radius: 50%;
+            animation: twinkle 3s infinite alternate;
+        }
+
+        @keyframes twinkle {
+            0% { opacity: 0.3; }
+            100% { opacity: 1; }
+        }
+
+        .container {
+            position: relative;
+            z-index: 2;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(90deg, #d4af37, #ffd700, #d4af37);
+            border-radius: 2px;
+        }
+
+        .title {
+            font-family: 'Cinzel', serif;
+            font-size: 3rem;
+            font-weight: 600;
+            color: #d4af37;
+            text-shadow: 0 0 20px rgba(212, 175, 55, 0.5);
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: #a8a8a8;
+            font-style: italic;
+        }
+
+        .journal-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .search-container {
+            position: relative;
+            flex: 1;
+            max-width: 300px;
+        }
+
+        .search-input {
+            width: 100%;
+            background: linear-gradient(145deg, #2a2a4a, #3a3a5a);
+            border: 2px solid #d4af37;
+            color: #f4f1e8;
+            padding: 0.8rem 1rem;
+            border-radius: 8px;
+            font-family: 'Crimson Text', serif;
+            font-size: 1rem;
+        }
+
+        .search-input::placeholder {
+            color: #a8a8a8;
+            font-style: italic;
+        }
+
+        .view-toggle {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .view-btn {
+            background: linear-gradient(145deg, #2a2a4a, #3a3a5a);
+            border: 2px solid #d4af37;
+            color: #f4f1e8;
+            padding: 0.8rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'Cinzel', serif;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .view-btn:hover {
+            background: linear-gradient(145deg, #3a3a5a, #4a4a6a);
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+        }
+
+        .view-btn.active {
+            background: linear-gradient(145deg, #d4af37, #ffd700);
+            color: #1a1a2e;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .page-btn {
+            background: linear-gradient(145deg, #2a2a4a, #3a3a5a);
+            border: 2px solid #d4af37;
+            color: #f4f1e8;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'Cinzel', serif;
+            transition: all 0.3s ease;
+            min-width: 40px;
+        }
+
+        .page-btn:hover {
+            background: linear-gradient(145deg, #3a3a5a, #4a4a6a);
+        }
+
+        .page-btn.active {
+            background: linear-gradient(145deg, #d4af37, #ffd700);
+            color: #1a1a2e;
+        }
+
+        /* Grid View */
+        .journal-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .journal-card {
+            background: linear-gradient(145deg, rgba(42, 42, 74, 0.9), rgba(58, 58, 90, 0.9));
+            border: 2px solid #d4af37;
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            height: 250px;
+            overflow: hidden;
+        }
+
+        .journal-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(212, 175, 55, 0.3);
+        }
+
+        .card-header {
+            border-bottom: 2px solid rgba(212, 175, 55, 0.3);
+            padding-bottom: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .card-title {
+            font-family: 'Cinzel', serif;
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #d4af37;
+            margin-bottom: 0.5rem;
+            line-height: 1.2;
+        }
+
+        .card-date {
+            color: #a8a8a8;
+            font-style: italic;
+            font-size: 0.9rem;
+        }
+
+        .card-preview {
+            line-height: 1.6;
+            font-size: 1rem;
+            color: #e0e0e0;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 4;
+            -webkit-box-orient: vertical;
+        }
+
+        /* List View */
+        .journal-list {
+            display: none;
+        }
+
+        .journal-list.active {
+            display: block;
+        }
+
+        .journal-list-item {
+            background: linear-gradient(145deg, rgba(42, 42, 74, 0.9), rgba(58, 58, 90, 0.9));
+            border: 2px solid #d4af37;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .journal-list-item:hover {
+            background: linear-gradient(145deg, rgba(58, 58, 90, 0.9), rgba(74, 74, 106, 0.9));
+            box-shadow: 0 5px 20px rgba(212, 175, 55, 0.2);
+        }
+
+        .list-item-content h3 {
+            font-family: 'Cinzel', serif;
+            color: #d4af37;
+            margin-bottom: 0.5rem;
+        }
+
+        .list-item-date {
+            color: #a8a8a8;
+            font-style: italic;
+            font-size: 0.9rem;
+        }
+
+        /* Full Entry View */
+        .journal-entry {
+            background: linear-gradient(145deg, rgba(42, 42, 74, 0.9), rgba(58, 58, 90, 0.9));
+            border: 2px solid #d4af37;
+            border-radius: 15px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+            position: relative;
+            display: none;
+            animation: fadeIn 0.6s ease-in-out;
+        }
+
+        .journal-entry.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .back-btn {
+            background: linear-gradient(145deg, #2a2a4a, #3a3a5a);
+            border: 2px solid #d4af37;
+            color: #f4f1e8;
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'Cinzel', serif;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin-bottom: 2rem;
+        }
+
+        .back-btn:hover {
+            background: linear-gradient(145deg, #3a3a5a, #4a4a6a);
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+        }
+
+        .entry-header {
+            border-bottom: 2px solid rgba(212, 175, 55, 0.3);
+            padding-bottom: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .entry-title {
+            font-family: 'Cinzel', serif;
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #d4af37;
+            margin-bottom: 0.5rem;
+        }
+
+        .entry-date {
+            color: #a8a8a8;
+            font-style: italic;
+            font-size: 1rem;
+        }
+
+        .entry-content {
+            line-height: 1.8;
+            font-size: 1.1rem;
+            text-align: justify;
+        }
+
+        .entry-content p {
+            margin-bottom: 1.2rem;
+        }
+
+        .entry-content h3 {
+            font-family: 'Cinzel', serif;
+            color: #d4af37;
+            font-size: 1.3rem;
+            margin: 1.5rem 0 1rem 0;
+        }
+
+        .entry-content em {
+            color: #d4af37;
+        }
+
+        .entry-content strong {
+            color: #ffd700;
+        }
+
+        .spell-reference {
+            background: rgba(212, 175, 55, 0.1);
+            border-left: 4px solid #d4af37;
+            padding: 0.5rem 1rem;
+            margin: 1rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .floating-runes {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .rune {
+            position: absolute;
+            font-size: 1.5rem;
+            color: rgba(212, 175, 55, 0.2);
+            animation: float 8s infinite ease-in-out;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+
+        .loading {
+            text-align: center;
+            color: #d4af37;
+            font-size: 1.2rem;
+            margin: 2rem 0;
+        }
+
+        .no-results {
+            text-align: center;
+            color: #a8a8a8;
+            font-style: italic;
+            margin: 2rem 0;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .title {
+                font-size: 2rem;
+            }
+            
+            .journal-controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .search-container {
+                max-width: none;
+            }
+            
+            .journal-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .journal-card {
+                height: auto;
+                min-height: 200px;
+            }
+            
+            .journal-entry {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated background elements -->
+    <div class="stars"></div>
+    <div class="floating-runes"></div>
+
+    <div class="container">
+        <header class="header">
+            <h1 class="title">The Arcane Chronicles</h1>
+            <p class="subtitle">A Wizard's Journey Through Realms Unknown</p>
+        </header>
+
+        <!-- Main Journal View -->
+        <div id="journalMain">
+            <div class="journal-controls">
+                <div class="search-container">
+                    <input type="text" class="search-input" id="searchInput" placeholder="Search entries...">
+                </div>
+                <div class="view-toggle">
+                    <button class="view-btn active" data-view="grid">Grid</button>
+                    <button class="view-btn" data-view="list">List</button>
+                </div>
+            </div>
+
+            <div class="pagination" id="pagination"></div>
+
+            <!-- Grid View -->
+            <div class="journal-grid" id="journalGrid"></div>
+
+            <!-- List View -->
+            <div class="journal-list" id="journalList"></div>
+
+            <div class="loading" id="loading" style="display: none;">Loading entries...</div>
+            <div class="no-results" id="noResults" style="display: none;">No entries found matching your search.</div>
+        </div>
+
+        <!-- Full Entry View -->
+        <div id="journalEntry" style="display: none;">
+            <button class="back-btn" id="backBtn">← Back to Journal</button>
+            <div id="entryContent"></div>
+        </div>
+    </div>
+
+    <script>
+        class WizardJournal {
+            constructor() {
+                this.entries = [];
+                this.filteredEntries = [];
+                this.currentPage = 1;
+                this.entriesPerPage = 12;
+                this.currentView = 'grid';
+                this.searchTerm = '';
+                
+                this.init();
+            }
+
+            async init() {
+                this.createStars();
+                this.createRunes();
+                this.setupEventListeners();
+                await this.loadEntries();
+                this.renderJournal();
+            }
+
+            async loadEntries() {
+                try {
+                    // In a real implementation, this would fetch from entries/entries.json
+                    // For now, we'll use the embedded data
+                    this.entries = [
+                        {
+                            id: 1,
+                            title: "The Awakening of Power",
+                            date: "Sixth Day of Springtide, Year 1126 (January 10, 2025)",
+                            preview: "Upon our arrival in the outer territories of Drakkenheim, I have taken to documenting the intricacies of this fractured realm...",
+                            file: "entry-001.html"
+                        },
+                        {
+                            id: 2,
+                            title: "Into the Cursed Ruins",
+                            date: "Seventh Day of Springtide, Year 1126 (January 15, 2025)",
+                            preview: "We have established our base of operations in Emberwood Village, renting a modest dwelling approximately two hours' ride from the dreaded perimeter of Drakkenheim...",
+                            file: "entry-002.html"
+                        },
+                        {
+                            id: 3,
+                            title: "A Brother's Desperate Plea",
+                            date: "Eigth Day of Mirtul, Year 1492 DR (January 22, 2025)",
+                            preview: "I can barely contain my excitement as I write these words – we have grown considerably in our magical and martial prowess!...",
+                            file: "entry-003.html"
+                        },
+                        {
+                            id: 4,
+                            title: "The Price of Knowledge",
+                            date: "Tenth Day of Mirtul, Year 1492 DR",
+                            preview: "Today I learned that some knowledge comes with a terrible price. We discovered the fate of Archmage Thessarian...",
+                            file: "entry-004.html"
+                        },
+                        {
+                            id: 5,
+                            title: "Bonds Forged in Fire",
+                            date: "Fifteenth Day of Mirtul, Year 1492 DR",
+                            preview: "As I write these words by the flickering light of our campfire, I realize that this adventure has changed me in ways I never expected...",
+                            file: "entry-005.html"
+                        }
+                    ];
+                    
+                    this.filteredEntries = [...this.entries];
+                } catch (error) {
+                    console.error('Error loading entries:', error);
+                }
+            }
+
+            setupEventListeners() {
+                // Search functionality
+                document.getElementById('searchInput').addEventListener('input', (e) => {
+                    this.searchTerm = e.target.value.toLowerCase();
+                    this.filterEntries();
+                });
+
+                // View toggle
+                document.querySelectorAll('.view-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        this.currentView = e.target.dataset.view;
+                        this.updateViewButtons();
+                        this.renderJournal();
+                    });
+                });
+
+                // Back button
+                document.getElementById('backBtn').addEventListener('click', () => {
+                    this.showJournalMain();
+                });
+            }
+
+            filterEntries() {
+                this.filteredEntries = this.entries.filter(entry => 
+                    entry.title.toLowerCase().includes(this.searchTerm) ||
+                    entry.preview.toLowerCase().includes(this.searchTerm) ||
+                    entry.date.toLowerCase().includes(this.searchTerm)
+                );
+                
+                this.currentPage = 1;
+                this.renderJournal();
+            }
+
+            updateViewButtons() {
+                document.querySelectorAll('.view-btn').forEach(btn => {
+                    btn.classList.toggle('active', btn.dataset.view === this.currentView);
+                });
+            }
+
+            renderJournal() {
+                if (this.filteredEntries.length === 0) {
+                    document.getElementById('noResults').style.display = 'block';
+                    document.getElementById('journalGrid').innerHTML = '';
+                    document.getElementById('journalList').innerHTML = '';
+                    document.getElementById('pagination').innerHTML = '';
+                    return;
+                } else {
+                    document.getElementById('noResults').style.display = 'none';
+                }
+
+                const startIndex = (this.currentPage - 1) * this.entriesPerPage;
+                const endIndex = startIndex + this.entriesPerPage;
+                const paginatedEntries = this.filteredEntries.slice(startIndex, endIndex);
+
+                if (this.currentView === 'grid') {
+                    this.renderGridView(paginatedEntries);
+                    document.getElementById('journalGrid').style.display = 'grid';
+                    document.getElementById('journalList').style.display = 'none';
+                } else {
+                    this.renderListView(paginatedEntries);
+                    document.getElementById('journalGrid').style.display = 'none';
+                    document.getElementById('journalList').style.display = 'block';
+                }
+
+                this.renderPagination();
+            }
+
+            renderGridView(entries) {
+                const grid = document.getElementById('journalGrid');
+                grid.innerHTML = entries.map(entry => `
+                    <div class="journal-card" onclick="journal.showEntry(${entry.id})">
+                        <div class="card-header">
+                            <div class="card-title">${entry.title}</div>
+                            <div class="card-date">${entry.date}</div>
+                        </div>
+                        <div class="card-preview">${entry.preview}</div>
+                    </div>
+                `).join('');
+            }
+
+            renderListView(entries) {
+                const list = document.getElementById('journalList');
+                list.innerHTML = entries.map(entry => `
+                    <div class="journal-list-item" onclick="journal.showEntry(${entry.id})">
+                        <div class="list-item-content">
+                            <h3>${entry.title}</h3>
+                            <div class="list-item-date">${entry.date}</div>
+                        </div>
+                        <div style="color: #d4af37; font-size: 1.5rem;">→</div>
+                    </div>
+                `).join('');
+            }
+
+            renderPagination() {
+                const totalPages = Math.ceil(this.filteredEntries.length / this.entriesPerPage);
+                const pagination = document.getElementById('pagination');
+                
+                if (totalPages <= 1) {
+                    pagination.innerHTML = '';
+                    return;
+                }
+
+                let paginationHTML = '';
+                
+                // Previous button
+                if (this.currentPage > 1) {
+                    paginationHTML += `<button class="page-btn" onclick="journal.goToPage(${this.currentPage - 1})">‹</button>`;
+                }
+                
+                // Page numbers
+                for (let i = 1; i <= totalPages; i++) {
+                    if (i === this.currentPage) {
+                        paginationHTML += `<button class="page-btn active">${i}</button>`;
+                    } else {
+                        paginationHTML += `<button class="page-btn" onclick="journal.goToPage(${i})">${i}</button>`;
+                    }
+                }
+                
+                // Next button
+                if (this.currentPage < totalPages) {
+                    paginationHTML += `<button class="page-btn" onclick="journal.goToPage(${this.currentPage + 1})">›</button>`;
+                }
+                
+                pagination.innerHTML = paginationHTML;
+            }
+
+            goToPage(page) {
+                this.currentPage = page;
+                this.renderJournal();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+
+            async showEntry(entryId) {
+                const entry = this.entries.find(e => e.id === entryId);
+                if (!entry) return;
+
+                document.getElementById('loading').style.display = 'block';
+                
+                try {
+                    // In a real implementation, this would fetch the HTML file
+                    // For now, we'll use embedded content
+                    const entryContent = this.getEntryContent(entryId);
+                    
+                    document.getElementById('entryContent').innerHTML = entryContent;
+                    document.getElementById('journalMain').style.display = 'none';
+                    document.getElementById('journalEntry').style.display = 'block';
+                    
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                } catch (error) {
+                    console.error('Error loading entry:', error);
+                } finally {
+                    document.getElementById('loading').style.display = 'none';
+                }
+            }
+
+            showJournalMain() {
+                document.getElementById('journalEntry').style.display = 'none';
+                document.getElementById('journalMain').style.display = 'block';
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+
+            getEntryContent(entryId) {
+                // This would normally load from individual files
+                const contents = {
+                    1: `
+                        <div class="journal-entry active">
+                            <div class="entry-header">
+                                <h2 class="entry-title">The Awakening of Power</h2>
+                                <div class="entry-date">Sixth Day of Springtide, Year 1126 (January 10, 2025)</div>
+                            </div>
+                            <div class="entry-content">
+                                <p>Upon our arrival in the outer territories of Drakkenheim, I have taken to documenting the intricacies of this fractured realm. The city is as much a labyrinth of peril as it is a testament to our species' follies—a crucible of shattered ambitions and forgotten glories. My companions and I tread cautiously, though even caution feels like a fragile shield here.</p>
+
+                                <h3>The "Lord of the Feast"</h3>
+                                <p>The inner city harbors a new terror: a beast referred to as the "Lord of the Feast." Rumors swirl around it like the Haze itself, thick and choking. This monstrous entity is said to lead the mutated, bipedal gnolls infesting the city's decayed heart. Daven's friend, Loric—a man of sharp wit and weary eyes, now among the Hooded Lanterns—warned us of its power. It recently ambushed a retinue of the Silver Order's paladins. Of those sent to hunt the beast, only one returned, and even then, mutilated and bereft of an arm. It is a grim testament to the creature's might and savagery.</p>
+
+                                <p>Daven, pragmatic as ever, seemed unfazed. Yet I noticed the tension in his shoulders when Loric described the beast. A leader among gnolls is no common foe; this creature may well prove a keystone in Drakkenheim's descent—or salvation.</p>
+
+                                <h3>A Tour Guide of Youthful Enterprise</h3>
+                                <p>We were greeted by a local child upon our arrival, one Emma of the Crowe blacksmithing shop. She offered us a tour for a single gold piece each (an exorbitant rate, but well worth the insight). For four gold in total, she led us through the village, pointing out key landmarks and places of interest. Her confidence was remarkable for her years, and her knowledge proved invaluable. I sense potential in her—perhaps as a smith, or perhaps something more. Time will tell if she is merely a spark or the beginning of a flame.</p>
+                                
+                                <h3>Beware the Boars and Snakes</h3>
+                                <p>A crucial note for survival: the creatures of the city—boars and snakes in particular—are tainted. They are unfit for consumption, their flesh a poison to any who would eat them. It seems even the natural order bends and breaks under Drakkenheim's curse, twisting sustenance into death. I must research this further. Is it a consequence of Delirium exposure, or something older, darker?</p>
+                                
+                                <h3>Camp Dawn and Captain Theodore Marshall</h3>
+                                <p>We have learned of the location of Camp Dawn, a bastion of the Silver Order led by Knight Captain Theodore Marshall. The name brought a shadow to Daven's face, his usual confidence turning to restrained bitterness. Marshall is no ally to us—or to Daven, for that matter. Whatever history exists between them, it festers like an old wound. I fear this will complicate our dealings with the Silver Order, but Daven has yet to speak openly of their shared past. When the time comes, I hope he will.</p>
+                                
+                                <h3>The Gates of Drakkenheim</h3>
+                                <p>The gates into Drakkenheim are held by three disparate forces, each more troubling than the last:</p>
+                                
+                                <p>The Gnolls, who control a gate and the Cathedral of St. Vitruvio. Their numbers and savagery are undeniable, bolstered by the malevolent presence of the Lord of the Feast.
+                                The Falling Fire, zealous worshippers who claim another gate as their own. I am reluctant to engage them, their fervor unsettling.</p>
+                                
+                                <p>A third gate, eerily quiet and draped in webs, untouched by any faction. The air near it carries a disquieting presence. Daven and I agree it would be prudent to tread carefully there.
+                                These gates are more than mere entryways—they are footholds in the battle for control of this city. If we are to navigate the chaos, understanding their significance will be vital.</p>
+                                
+                                <h3>The Hooded Lanterns and Loric</h3>
+                                <p>In a moment of camaraderie, we reunited with Loric, who has taken up arms with the Hooded Lanterns. Their efforts to establish order and governance within this fractured realm are admirable, though Loric wears the weight of his duty heavily. He spoke with conviction about their mission but did not hide the immense challenges they face. Still, the man has fire in his heart, and I am glad to have him as an ally.</p>
+                                
+                                <h3>Ziri's Disdain for the Amethyst Academy</h3>
+                                <p>Lastly, Ziri continues to harbor a significant distaste for the Amethyst Academy. I am not entirely unsympathetic—many of their practices are dubious at best, and their hunger for Delirium borders on reckless. However, we cannot ignore their resources or influence. For now, I will navigate this delicate tension with care. Ziri's mistrust may prove justified, or it may be a stumbling block in the greater task at hand. Time, as always, will reveal the truth.</p>
+                                
+                                <p>Drakkenheim continues to defy comprehension, a city of puzzles and paradoxes. Yet in this chaos, I see opportunity—a chance to build something greater, if only we can survive its many dangers. And survive we must.</p>
+                                
+                                <em>- Calithea Veyne</em>
+                            </div>
+                        </div>
+                    `,
+                    2: `
+                        <div class="journal-entry active">
+                            <div class="entry-header">
+                                <h2 class="entry-title">Into the Cursed Ruins</h2>
+                                <div class="entry-date">Seventh Day of Springtide, Year 1126 (January 15, 2025)</div>
+                            </div>
+                            <div class="entry-content">
+                                <p>We have established our base of operations in Emberwood Village, renting a modest dwelling approximately two hours' ride from the dreaded perimeter of Drakkenheim. This small settlement represents the last bastion of civilized life before the <strong>haze</strong> consumes all. I confess, the proximity both thrills and terrifies me – so close to such concentrated magical devastation, yet safely beyond its corrupting reach.</p>
+                                
+                                <p>Today I spent considerable time researching the nature of the haze that shrouds the ruined city. The knowledge I've gathered chills me to the bone. This is no ordinary magical phenomenon – it is a <em>living curse</em> that defies the natural order. Within its embrace, nothing rots as it should; instead, flesh either mutates beyond recognition or is devoured entirely. The very air becomes poison after a full day's exposure, requiring constitution of iron to resist its contaminating touch.</p>
+                                
+                                <div class="spell-reference">
+                                    <strong>Magical Observations:</strong> The haze actively resists magical intrusion. Teleportation spells fail at its borders, telepathic communication is severed, and most disturbing of all – divination magic directed toward understanding Drakkenheim's fate drives practitioners to complete madness. I must remember this warning should curiosity overwhelm caution.
+                                </div>
+                                
+                                <p>Our discussions with the locals revealed the political complexities of entering the city. Four gates provide passage through the enchanted walls, each controlled by different factions. Daven seeks audience with the Hooded Lanterns at Shepherd's Gate, though they demand proof of our worthiness before granting passage. Apparently, survival in the outskirts and successful delirium extraction serve as adequate credentials.</p>
+                                
+                                <p>I visited the Caravan Court to speak with Arvan about the intricacies of <strong>delirium extraction</strong>. This crystallized magical essence, born from the catastrophe itself, has become a valuable – if dangerous – commodity. We procured the necessary tools and a comprehensive guide, which I've been studying with great interest. The techniques required blend alchemical precision with magical sensitivity in ways I've never encountered.</p>
+                                
+                                <p>Our first venture into the contaminated outskirts proved both profitable and harrowing. We encountered a pack of <em>giant rats</em> – creatures grown monstrous from prolonged haze exposure. Though we emerged victorious, their ferocity left us all bloodied and reminded me that even the "lesser" dangers of this place demand respect. Daven collected their oversized fangs as trophies, ever the practical warrior.</p>
+                                
+                                <p>My arcane training served us well in locating deposits of raw delirium, though our collection efforts attracted unwanted attention. A band of rival adventurers ambushed us, clearly intent on claiming our findings for themselves. The encounter turned deadly when they struck down Daven, forcing us to respond with lethal force. I take no pleasure in such violence, but I will not allow my companions to fall to common bandits.</p>
+                                
+                                <p>The journey back to Emberwood proved eventful as well – we spotted a group of <strong>shamblers</strong> in the distance and wisely chose retreat over confrontation. Our wounds from the earlier encounters made discretion the better part of valor. Sometimes the greatest victory lies in knowing when not to fight.</p>
+                                
+                                <p>We successfully sold our delirium to Aldor, accepting gold and a useful magical trinket in exchange. The day's profits, while modest, prove we can survive and even thrive in these cursed lands. Anna the Flamekeeper at the Chapel has offered her services should contamination take hold of any of us – a comfort, knowing such expertise remains within reach.</p>
+                                
+                                <p>As I write this by candlelight, I find myself both exhausted and exhilarated. Tomorrow we rest and plan our next foray into the ruins. Each expedition brings new knowledge, new dangers, and new opportunities to uncover the secrets hidden within Drakkenheim's shattered walls.</p>
+                            </div>
+                        </div>
+                    `,
+                    3: `
+                        <div class="journal-entry active">
+                            <div class="entry-header">
+                                <h2 class="entry-title">A Brother's Desperate Plea</h2>
+                                <div class="entry-date">Eigth Day of Mirtul, Year 1492 DR (January 22, 2025)</div>
+                            </div>
+                            <div class="entry-content">
+                                <p>I can barely contain my excitement as I write these words – we have grown considerably in our magical and martial prowess! The experiences of recent days have strengthened not only my understanding of the arcane arts, but also deepened the bonds between my companions. I feel the familiar tingle of expanded magical capacity flowing through me, and my spellbook seems somehow more receptive to new inscriptions.</p>
+                                
+                                <p>Today brought an unexpected encounter with one of the Lang brothers, whose anguish was palpable as he approached our party. His sister has been taken – kidnapped and dragged to a place called the <strong>Ratnest Tavern</strong>. The very name sends an unpleasant shiver down my spine. He spoke of ratling creatures with crossbows and other ranged weaponry defending the establishment, which presents a tactical challenge I'm already beginning to strategize around.</p>
+                                
+                                <div class="spell-reference">
+                                    <strong>Strategic Note:</strong> Ranged combatants suggest the need for protective barriers and careful positioning. My <em>Shield</em> spell may prove invaluable, though I should also consider <em>Mirror Image</em> for additional protection.
+                                </div>
+                                
+                                <p>What intrigues me most about this request is its unofficial nature. Though the man claims loose ties to the Hooded Lanterns, he admitted this rescue falls outside their typical operations. Their pragmatic motto – never spend more resources than the potential yield – means we're operating without their official sanction. It's a calculated risk that speaks to the organization's ruthless efficiency, if not their compassion.</p>
+                                
+                                <p>The promised reward of up to 250 gold pieces caught everyone's attention, though our ever-enterprising Ziri couldn't resist attempting to negotiate for more. While the purse remained fixed, Lang did offer something potentially more valuable – a personal recommendation to the Commander of the Hooded Lanterns. Such connections could prove invaluable in a city like Drakkenheim.</p>
+                                
+                                <p>His suggested route intrigued me from a tactical standpoint. Rather than approaching directly, he recommended taking the longer path across the bridge before entering the city proper. This speaks to someone familiar with both the dangers and the geography of the area – knowledge I've filed away for future reference.</p>
+                                
+                                <p>Fortune smiled upon us as we discovered a concealed entrance through the sewers, avoiding what would surely have been a more perilous frontal assault. The stench was... considerable, but the tactical advantage was undeniable. Within these fetid tunnels, we encountered something I can only describe as a <strong>Ratling Prince</strong> – a creature of surprising intelligence and malevolent cunning.</p>
+                                
+                                <p>The battle was fierce but swift. My spells found their marks, and my companions fought with the coordinated precision that speaks to our growing experience together. With the Prince defeated, we now press deeper into this warren of corruption in search of both the Lang sister and someone called Loric – though I confess I'm uncertain of the latter's significance to our mission.</p>
+                                
+                                <p>The hunt begins in earnest tomorrow. I've prepared my most versatile selection of spells, anticipating unknown dangers ahead. Whatever lurks in the depths of the Ratnest Tavern, we shall face it together.</p>
+                            </div>
+                        </div>
+                    `,
+                    4: `
+                        <div class="journal-entry active">
+                            <div class="entry-header">
+                                <h2 class="entry-title">The Price of Knowledge</h2>
+                                <div class="entry-date">Tenth Day of Mirtul, Year 1492 DR</div>
+                            </div>
+                            <div class="entry-content">
+                                <p>Today I learned that some knowledge comes with a terrible price. We discovered the fate of Archmage Thessarian, and it serves as a sobering reminder of the dangers that await those who delve too deeply into the mysteries of magic.</p>
+                                
+                                <p>The ancient lich that was once Thessarian offered me power beyond imagination in exchange for the Shard of Seeing. For a moment – and I am ashamed to admit this – I was tempted. The promises of arcane knowledge, of spells that could reshape reality itself, whispered to the ambitious part of my soul that I thought I had better controlled.</p>
+                                
+                                <div class="spell-reference">
+                                    <strong>Combat Notes:</strong> <em>Counterspell</em> was crucial in our battle against the lich. I successfully countered his <em>Disintegrate</em> spell, though the mental strain was enormous. I must practice this technique more – it may be our only defense against high-level spellcasters.
+                                </div>
+                                
+                                <p>Our barbarian's rage proved surprisingly effective against the lich's fear effects. There is something to be said for the purity of raw emotion in the face of supernatural terror. Magic is not always the answer, though it pains me to admit it.</p>
+                                
+                                <p>We escaped with our lives, and more importantly, with our souls intact. The <strong>Shard of Seeing</strong> remains in our possession, but I've noticed disturbing changes in myself since our encounter with the lich. Sometimes, when I look in mirrors, I glimpse shadows that aren't there, and my dreams are filled with whispers in languages I don't recognize but somehow understand.</p>
+                                
+                                <p>I must be more careful. Power without wisdom is the path to destruction, as Thessarian learned too late.</p>
+                            </div>
+                        </div>
+                    `,
+                    5: `
+                        <div class="journal-entry active">
+                            <div class="entry-header">
+                                <h2 class="entry-title">Bonds Forged in Fire</h2>
+                                <div class="entry-date">Fifteenth Day of Mirtul, Year 1492 DR</div>
+                            </div>
+                            <div class="entry-content">
+                                <p>As I write these words by the flickering light of our campfire, I realize that this adventure has changed me in ways I never expected. Not just in terms of magical knowledge – though I have certainly learned much – but in my understanding of companionship and trust.</p>
+                                
+                                <p>Today's encounter with the dragon cult tested every spell in my repertoire and every bond we've forged as a party. When our cleric fell to the cult leader's <em>Hold Person</em> spell, I found myself casting <em>Shield</em> not just for my own protection, but positioning myself to guard her prone form. Such selflessness would have been foreign to me mere weeks ago.</p>
+                                
+                                <div class="spell-reference">
+                                    <strong>Tactical Observation:</strong> Combining <em>Web</em> with the fighter's oil flask created a devastating area denial effect. The resulting flames channeled through my <em>Control Flames</em> cantrip allowed for precise battlefield control. Teamwork multiplies magical effectiveness exponentially.
+                                </div>
+                                
+                                <p>The <strong>Shard of Seeing</strong> revealed its true power during the battle. For a brief moment, I could perceive the magical auras of every living being around us, their intentions laid bare like open books. I saw the cult leader's desperation, our fighter's unwavering determination, and most surprisingly, the genuine care my companions hold for one another – and for me.</p>
+                                
+                                <p>We recovered a second shard from the cult's treasury – the <em>Shard of Binding</em>. With two of the seven artifacts now in our possession, I fear we've painted a target on our backs that will attract attention from powers far greater than simple bandits or magical beasts.</p>
+                                
+                                <p>But for the first time since leaving my master's tower, I feel ready for whatever challenges await. I am no longer a solitary scholar hoarding knowledge like a dragon hoards gold. I am part of something greater – a fellowship bound by shared trials and mutual trust. My magic is stronger for it, and perhaps more importantly, so am I.</p>
+                            </div>
+                        </div>
+                    `
+                };
+                
+                return contents[entryId] || '<p>Entry not found.</p>';
+            }
+
+            createStars() {
+                const starsContainer = document.querySelector('.stars');
+                const numStars = 50;
+                
+                for (let i = 0; i < numStars; i++) {
+                    const star = document.createElement('div');
+                    star.className = 'star';
+                    star.style.left = Math.random() * 100 + '%';
+                    star.style.top = Math.random() * 100 + '%';
+                    star.style.animationDelay = Math.random() * 3 + 's';
+                    starsContainer.appendChild(star);
+                }
+            }
+
+            createRunes() {
+                const runesContainer = document.querySelector('.floating-runes');
+                const runes = ['⚡', '🔮', '✨', '🌟', '🎭', '📜', '🗝️', '💎'];
+                const numRunes = 8;
+                
+                for (let i = 0; i < numRunes; i++) {
+                    const rune = document.createElement('div');
+                    rune.className = 'rune';
+                    rune.textContent = runes[Math.floor(Math.random() * runes.length)];
+                    rune.style.left = Math.random() * 90 + '%';
+                    rune.style.top = Math.random() * 90 + '%';
+                    rune.style.animationDelay = Math.random() * 8 + 's';
+                    rune.style.animationDuration = (6 + Math.random() * 4) + 's';
+                    runesContainer.appendChild(rune);
+                }
+            }
+        }
+
+        // Initialize the journal when the page loads
+        let journal;
+        document.addEventListener('DOMContentLoaded', () => {
+            journal = new WizardJournal();
+        });
+    </script>
+</body>
+</html>
