@@ -52,17 +52,17 @@
     },
     {
       "id": 4,
-      "title": "The Price of Knowledge",
-      "date": "Tenth Day of Mirtul, Year 1492 DR",
-      "preview": "Today I learned that some knowledge comes with a terrible price. We discovered the fate of Archmage Thessarian, and it serves as a sobering reminder of the dangers that await those who delve too deeply into the mysteries of magic...",
+      "title": "The Rescue of Petra Lang",
+      "date": "Eigth Day of Mirtul, Year 1492 DR (January 27, 2025)",
+      "preview": "Our search through the warrens for the missing Lang sister continued today, though I confess the endless tunnels...",
       "file": "entry-004.html",
-      "tags": ["lich", "thessarian", "shard-of-seeing", "temptation", "counterspell"],
+      "tags": ["ratnest-tavern", "delirium", "rescue", "ratlings", "tunnels"],
       "session": 4,
-      "wordCount": 650,
+      "wordCount": 612,
       "featured": true,
-      "locations": ["Ancient Ruins"],
-      "characters": ["Archmage Thessarian (Lich)", "Barbarian Companion"],
-      "themes": ["magic", "corruption", "wisdom", "power"]
+      "locations": ["Ratnest Tavern", "Sewers", "Tunnels", "Shephard's Gate"],
+      "characters": ["Petra Lang", "Calithea", "Euphoria", "Loric", "Brother Lang"],
+      "themes": ["magic", "contamination", "rescue", "danger", "corruption", "knowledge"]
     },
     {
       "id": 5,
