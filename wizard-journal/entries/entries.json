@@ -175,6 +175,20 @@
       "locations": ["Emberwood Village", "Ironhelm Smithy"],
       "characters": ["Ziri", "Calithea", "Daven", "Euphoria", "Ironhelm", "Petra Lang"],
       "themes": ["friendship", "growth", "diplomacy"]
+    },
+    {
+      "id": 13,
+      "title": "The Weight of Resurrection",
+      "date": "July 24, 2025",
+      "preview": "We have finally reached Emberwood Village, and the weight of what lies ahead settles heavily upon my shoulders. Two days of rest here will give us time to prepare for what promises to be the most...",
+      "file": "entry-013.html",
+      "tags": ["Resurrection", "Morrigan", "Aegon Ghostweaver", "Delirium"],
+      "session": 14,
+      "wordCount": ,
+      "featured": true,
+      "locations": ["Emberwood Village", "Clearing of Morrigan the Night Mother", "Eckerman Mill"],
+      "characters": ["Ziri", "Calithea", "Daven", "Euphoria", "Aegon Ghostweaver", "Aaron Grint", "Ser Paladin Leandros"],
+      "themes": ["friendship", "growth", "resurrection", "moral dilemma"]
     }
   ],
   "tags": {
