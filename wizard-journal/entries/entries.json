@@ -17,7 +17,7 @@
       "tags": ["drakkenheim", "introduction", "gnolls", "lord-of-feast", "hooded-lanterns"],
       "session": 1,
       "wordCount": 1250,
-      "featured": true,
+      "featured": false,
       "locations": ["Drakkenheim", "Emberwood Village", "Camp Dawn"],
       "characters": ["Daven", "Loric", "Emma Crowe", "Theodore Marshall", "Ziri"],
       "themes": ["exploration", "politics", "survival"]
@@ -31,7 +31,7 @@
       "tags": ["haze", "delirium", "combat", "giant-rats", "shamblers"],
       "session": 2,
       "wordCount": 980,
-      "featured": false,
+      "featured": true,
       "locations": ["Emberwood Village", "Drakkenheim Outskirts", "Caravan Court"],
       "characters": ["Arvan", "Aldor", "Anna the Flamekeeper"],
       "themes": ["magic", "danger", "commerce"]
