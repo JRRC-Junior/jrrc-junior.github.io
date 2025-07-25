@@ -680,13 +680,12 @@
             async showEntry(entryId) {
                 const entry = this.entries.find(e => e.id === entryId);
                 if (!entry) return;
-
+            
                 document.getElementById('loading').style.display = 'block';
                 
                 try {
-                    // In a real implementation, this would fetch the HTML file
-                    // For now, we'll use embedded content
-                    const entryContent = this.getEntryContent(entryId);
+                    // Now this is an async call
+                    const entryContent = await this.getEntryContent(entryId);
                     
                     document.getElementById('entryContent').innerHTML = entryContent;
                     document.getElementById('journalMain').style.display = 'none';
@@ -706,162 +705,38 @@
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             }
 
-            getEntryContent(entryId) {
-                // This would normally load from individual files
-                const contents = {
-                    1: `
+            async getEntryContent(entryId) {
+                const entry = this.entries.find(e => e.id === entryId);
+                if (!entry) {
+                    return '<p>Entry not found.</p>';
+                }
+            
+                try {
+                    // Fetch the individual entry file
+                    const response = await fetch(`entries/${entry.file}`);
+                    
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    
+                    const htmlContent = await response.text();
+                    return htmlContent;
+                    
+                } catch (error) {
+                    console.error('Error loading entry:', error);
+                    return `
                         <div class="journal-entry active">
                             <div class="entry-header">
-                                <h2 class="entry-title">The Awakening of Power</h2>
-                                <div class="entry-date">Sixth Day of Springtide, Year 1126 (January 10, 2025)</div>
+                                <h2 class="entry-title">Error Loading Entry</h2>
+                                <div class="entry-date">${entry.date}</div>
                             </div>
                             <div class="entry-content">
-                                <p>Upon our arrival in the outer territories of Drakkenheim, I have taken to documenting the intricacies of this fractured realm. The city is as much a labyrinth of peril as it is a testament to our species' follies—a crucible of shattered ambitions and forgotten glories. My companions and I tread cautiously, though even caution feels like a fragile shield here.</p>
-
-                                <h3>The "Lord of the Feast"</h3>
-                                <p>The inner city harbors a new terror: a beast referred to as the "Lord of the Feast." Rumors swirl around it like the Haze itself, thick and choking. This monstrous entity is said to lead the mutated, bipedal gnolls infesting the city's decayed heart. Daven's friend, Loric—a man of sharp wit and weary eyes, now among the Hooded Lanterns—warned us of its power. It recently ambushed a retinue of the Silver Order's paladins. Of those sent to hunt the beast, only one returned, and even then, mutilated and bereft of an arm. It is a grim testament to the creature's might and savagery.</p>
-
-                                <p>Daven, pragmatic as ever, seemed unfazed. Yet I noticed the tension in his shoulders when Loric described the beast. A leader among gnolls is no common foe; this creature may well prove a keystone in Drakkenheim's descent—or salvation.</p>
-
-                                <h3>A Tour Guide of Youthful Enterprise</h3>
-                                <p>We were greeted by a local child upon our arrival, one Emma of the Crowe blacksmithing shop. She offered us a tour for a single gold piece each (an exorbitant rate, but well worth the insight). For four gold in total, she led us through the village, pointing out key landmarks and places of interest. Her confidence was remarkable for her years, and her knowledge proved invaluable. I sense potential in her—perhaps as a smith, or perhaps something more. Time will tell if she is merely a spark or the beginning of a flame.</p>
-                                
-                                <h3>Beware the Boars and Snakes</h3>
-                                <p>A crucial note for survival: the creatures of the city—boars and snakes in particular—are tainted. They are unfit for consumption, their flesh a poison to any who would eat them. It seems even the natural order bends and breaks under Drakkenheim's curse, twisting sustenance into death. I must research this further. Is it a consequence of Delirium exposure, or something older, darker?</p>
-                                
-                                <h3>Camp Dawn and Captain Theodore Marshall</h3>
-                                <p>We have learned of the location of Camp Dawn, a bastion of the Silver Order led by Knight Captain Theodore Marshall. The name brought a shadow to Daven's face, his usual confidence turning to restrained bitterness. Marshall is no ally to us—or to Daven, for that matter. Whatever history exists between them, it festers like an old wound. I fear this will complicate our dealings with the Silver Order, but Daven has yet to speak openly of their shared past. When the time comes, I hope he will.</p>
-                                
-                                <h3>The Gates of Drakkenheim</h3>
-                                <p>The gates into Drakkenheim are held by three disparate forces, each more troubling than the last:</p>
-                                
-                                <p>The Gnolls, who control a gate and the Cathedral of St. Vitruvio. Their numbers and savagery are undeniable, bolstered by the malevolent presence of the Lord of the Feast.
-                                The Falling Fire, zealous worshippers who claim another gate as their own. I am reluctant to engage them, their fervor unsettling.</p>
-                                
-                                <p>A third gate, eerily quiet and draped in webs, untouched by any faction. The air near it carries a disquieting presence. Daven and I agree it would be prudent to tread carefully there.
-                                These gates are more than mere entryways—they are footholds in the battle for control of this city. If we are to navigate the chaos, understanding their significance will be vital.</p>
-                                
-                                <h3>The Hooded Lanterns and Loric</h3>
-                                <p>In a moment of camaraderie, we reunited with Loric, who has taken up arms with the Hooded Lanterns. Their efforts to establish order and governance within this fractured realm are admirable, though Loric wears the weight of his duty heavily. He spoke with conviction about their mission but did not hide the immense challenges they face. Still, the man has fire in his heart, and I am glad to have him as an ally.</p>
-                                
-                                <h3>Ziri's Disdain for the Amethyst Academy</h3>
-                                <p>Lastly, Ziri continues to harbor a significant distaste for the Amethyst Academy. I am not entirely unsympathetic—many of their practices are dubious at best, and their hunger for Delirium borders on reckless. However, we cannot ignore their resources or influence. For now, I will navigate this delicate tension with care. Ziri's mistrust may prove justified, or it may be a stumbling block in the greater task at hand. Time, as always, will reveal the truth.</p>
-                                
-                                <p>Drakkenheim continues to defy comprehension, a city of puzzles and paradoxes. Yet in this chaos, I see opportunity—a chance to build something greater, if only we can survive its many dangers. And survive we must.</p>
-                                
-                                <em>- Calithea Veyne</em>
+                                <p>Sorry, this entry could not be loaded. Please try again later.</p>
+                                <p><em>Error: ${error.message}</em></p>
                             </div>
                         </div>
-                    `,
-                    2: `
-                        <div class="journal-entry active">
-                            <div class="entry-header">
-                                <h2 class="entry-title">Into the Cursed Ruins</h2>
-                                <div class="entry-date">Seventh Day of Springtide, Year 1126 (January 15, 2025)</div>
-                            </div>
-                            <div class="entry-content">
-                                <p>We have established our base of operations in Emberwood Village, renting a modest dwelling approximately two hours' ride from the dreaded perimeter of Drakkenheim. This small settlement represents the last bastion of civilized life before the <strong>haze</strong> consumes all. I confess, the proximity both thrills and terrifies me – so close to such concentrated magical devastation, yet safely beyond its corrupting reach.</p>
-                                
-                                <p>Today I spent considerable time researching the nature of the haze that shrouds the ruined city. The knowledge I've gathered chills me to the bone. This is no ordinary magical phenomenon – it is a <em>living curse</em> that defies the natural order. Within its embrace, nothing rots as it should; instead, flesh either mutates beyond recognition or is devoured entirely. The very air becomes poison after a full day's exposure, requiring constitution of iron to resist its contaminating touch.</p>
-                                
-                                <div class="spell-reference">
-                                    <strong>Magical Observations:</strong> The haze actively resists magical intrusion. Teleportation spells fail at its borders, telepathic communication is severed, and most disturbing of all – divination magic directed toward understanding Drakkenheim's fate drives practitioners to complete madness. I must remember this warning should curiosity overwhelm caution.
-                                </div>
-                                
-                                <p>Our discussions with the locals revealed the political complexities of entering the city. Four gates provide passage through the enchanted walls, each controlled by different factions. Daven seeks audience with the Hooded Lanterns at Shepherd's Gate, though they demand proof of our worthiness before granting passage. Apparently, survival in the outskirts and successful delirium extraction serve as adequate credentials.</p>
-                                
-                                <p>I visited the Caravan Court to speak with Arvan about the intricacies of <strong>delirium extraction</strong>. This crystallized magical essence, born from the catastrophe itself, has become a valuable – if dangerous – commodity. We procured the necessary tools and a comprehensive guide, which I've been studying with great interest. The techniques required blend alchemical precision with magical sensitivity in ways I've never encountered.</p>
-                                
-                                <p>Our first venture into the contaminated outskirts proved both profitable and harrowing. We encountered a pack of <em>giant rats</em> – creatures grown monstrous from prolonged haze exposure. Though we emerged victorious, their ferocity left us all bloodied and reminded me that even the "lesser" dangers of this place demand respect. Daven collected their oversized fangs as trophies, ever the practical warrior.</p>
-                                
-                                <p>My arcane training served us well in locating deposits of raw delirium, though our collection efforts attracted unwanted attention. A band of rival adventurers ambushed us, clearly intent on claiming our findings for themselves. The encounter turned deadly when they struck down Daven, forcing us to respond with lethal force. I take no pleasure in such violence, but I will not allow my companions to fall to common bandits.</p>
-                                
-                                <p>The journey back to Emberwood proved eventful as well – we spotted a group of <strong>shamblers</strong> in the distance and wisely chose retreat over confrontation. Our wounds from the earlier encounters made discretion the better part of valor. Sometimes the greatest victory lies in knowing when not to fight.</p>
-                                
-                                <p>We successfully sold our delirium to Aldor, accepting gold and a useful magical trinket in exchange. The day's profits, while modest, prove we can survive and even thrive in these cursed lands. Anna the Flamekeeper at the Chapel has offered her services should contamination take hold of any of us – a comfort, knowing such expertise remains within reach.</p>
-                                
-                                <p>As I write this by candlelight, I find myself both exhausted and exhilarated. Tomorrow we rest and plan our next foray into the ruins. Each expedition brings new knowledge, new dangers, and new opportunities to uncover the secrets hidden within Drakkenheim's shattered walls.</p>
-                            </div>
-                        </div>
-                    `,
-                    3: `
-                        <div class="journal-entry active">
-                            <div class="entry-header">
-                                <h2 class="entry-title">A Brother's Desperate Plea</h2>
-                                <div class="entry-date">Eigth Day of Mirtul, Year 1492 DR (January 22, 2025)</div>
-                            </div>
-                            <div class="entry-content">
-                                <p>I can barely contain my excitement as I write these words – we have grown considerably in our magical and martial prowess! The experiences of recent days have strengthened not only my understanding of the arcane arts, but also deepened the bonds between my companions. I feel the familiar tingle of expanded magical capacity flowing through me, and my spellbook seems somehow more receptive to new inscriptions.</p>
-                                
-                                <p>Today brought an unexpected encounter with one of the Lang brothers, whose anguish was palpable as he approached our party. His sister has been taken – kidnapped and dragged to a place called the <strong>Ratnest Tavern</strong>. The very name sends an unpleasant shiver down my spine. He spoke of ratling creatures with crossbows and other ranged weaponry defending the establishment, which presents a tactical challenge I'm already beginning to strategize around.</p>
-                                
-                                <div class="spell-reference">
-                                    <strong>Strategic Note:</strong> Ranged combatants suggest the need for protective barriers and careful positioning. My <em>Shield</em> spell may prove invaluable, though I should also consider <em>Mirror Image</em> for additional protection.
-                                </div>
-                                
-                                <p>What intrigues me most about this request is its unofficial nature. Though the man claims loose ties to the Hooded Lanterns, he admitted this rescue falls outside their typical operations. Their pragmatic motto – never spend more resources than the potential yield – means we're operating without their official sanction. It's a calculated risk that speaks to the organization's ruthless efficiency, if not their compassion.</p>
-                                
-                                <p>The promised reward of up to 250 gold pieces caught everyone's attention, though our ever-enterprising Ziri couldn't resist attempting to negotiate for more. While the purse remained fixed, Lang did offer something potentially more valuable – a personal recommendation to the Commander of the Hooded Lanterns. Such connections could prove invaluable in a city like Drakkenheim.</p>
-                                
-                                <p>His suggested route intrigued me from a tactical standpoint. Rather than approaching directly, he recommended taking the longer path across the bridge before entering the city proper. This speaks to someone familiar with both the dangers and the geography of the area – knowledge I've filed away for future reference.</p>
-                                
-                                <p>Fortune smiled upon us as we discovered a concealed entrance through the sewers, avoiding what would surely have been a more perilous frontal assault. The stench was... considerable, but the tactical advantage was undeniable. Within these fetid tunnels, we encountered something I can only describe as a <strong>Ratling Prince</strong> – a creature of surprising intelligence and malevolent cunning.</p>
-                                
-                                <p>The battle was fierce but swift. My spells found their marks, and my companions fought with the coordinated precision that speaks to our growing experience together. With the Prince defeated, we now press deeper into this warren of corruption in search of both the Lang sister and someone called Loric – though I confess I'm uncertain of the latter's significance to our mission.</p>
-                                
-                                <p>The hunt begins in earnest tomorrow. I've prepared my most versatile selection of spells, anticipating unknown dangers ahead. Whatever lurks in the depths of the Ratnest Tavern, we shall face it together.</p>
-                            </div>
-                        </div>
-                    `,
-                    4: `
-                        <div class="journal-entry active">
-                            <div class="entry-header">
-                                <h2 class="entry-title">The Price of Knowledge</h2>
-                                <div class="entry-date">Tenth Day of Mirtul, Year 1492 DR</div>
-                            </div>
-                            <div class="entry-content">
-                                <p>Today I learned that some knowledge comes with a terrible price. We discovered the fate of Archmage Thessarian, and it serves as a sobering reminder of the dangers that await those who delve too deeply into the mysteries of magic.</p>
-                                
-                                <p>The ancient lich that was once Thessarian offered me power beyond imagination in exchange for the Shard of Seeing. For a moment – and I am ashamed to admit this – I was tempted. The promises of arcane knowledge, of spells that could reshape reality itself, whispered to the ambitious part of my soul that I thought I had better controlled.</p>
-                                
-                                <div class="spell-reference">
-                                    <strong>Combat Notes:</strong> <em>Counterspell</em> was crucial in our battle against the lich. I successfully countered his <em>Disintegrate</em> spell, though the mental strain was enormous. I must practice this technique more – it may be our only defense against high-level spellcasters.
-                                </div>
-                                
-                                <p>Our barbarian's rage proved surprisingly effective against the lich's fear effects. There is something to be said for the purity of raw emotion in the face of supernatural terror. Magic is not always the answer, though it pains me to admit it.</p>
-                                
-                                <p>We escaped with our lives, and more importantly, with our souls intact. The <strong>Shard of Seeing</strong> remains in our possession, but I've noticed disturbing changes in myself since our encounter with the lich. Sometimes, when I look in mirrors, I glimpse shadows that aren't there, and my dreams are filled with whispers in languages I don't recognize but somehow understand.</p>
-                                
-                                <p>I must be more careful. Power without wisdom is the path to destruction, as Thessarian learned too late.</p>
-                            </div>
-                        </div>
-                    `,
-                    5: `
-                        <div class="journal-entry active">
-                            <div class="entry-header">
-                                <h2 class="entry-title">Bonds Forged in Fire</h2>
-                                <div class="entry-date">Fifteenth Day of Mirtul, Year 1492 DR</div>
-                            </div>
-                            <div class="entry-content">
-                                <p>As I write these words by the flickering light of our campfire, I realize that this adventure has changed me in ways I never expected. Not just in terms of magical knowledge – though I have certainly learned much – but in my understanding of companionship and trust.</p>
-                                
-                                <p>Today's encounter with the dragon cult tested every spell in my repertoire and every bond we've forged as a party. When our cleric fell to the cult leader's <em>Hold Person</em> spell, I found myself casting <em>Shield</em> not just for my own protection, but positioning myself to guard her prone form. Such selflessness would have been foreign to me mere weeks ago.</p>
-                                
-                                <div class="spell-reference">
-                                    <strong>Tactical Observation:</strong> Combining <em>Web</em> with the fighter's oil flask created a devastating area denial effect. The resulting flames channeled through my <em>Control Flames</em> cantrip allowed for precise battlefield control. Teamwork multiplies magical effectiveness exponentially.
-                                </div>
-                                
-                                <p>The <strong>Shard of Seeing</strong> revealed its true power during the battle. For a brief moment, I could perceive the magical auras of every living being around us, their intentions laid bare like open books. I saw the cult leader's desperation, our fighter's unwavering determination, and most surprisingly, the genuine care my companions hold for one another – and for me.</p>
-                                
-                                <p>We recovered a second shard from the cult's treasury – the <em>Shard of Binding</em>. With two of the seven artifacts now in our possession, I fear we've painted a target on our backs that will attract attention from powers far greater than simple bandits or magical beasts.</p>
-                                
-                                <p>But for the first time since leaving my master's tower, I feel ready for whatever challenges await. I am no longer a solitary scholar hoarding knowledge like a dragon hoards gold. I am part of something greater – a fellowship bound by shared trials and mutual trust. My magic is stronger for it, and perhaps more importantly, so am I.</p>
-                            </div>
-                        </div>
-                    `
-                };
-                
-                return contents[entryId] || '<p>Entry not found.</p>';
+                    `;
+                }
             }
 
             createStars() {
