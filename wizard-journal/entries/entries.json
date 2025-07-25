@@ -66,7 +66,7 @@
     },
     {
       "id": 5,
-      "title": "Bonds Forged in Fire",
+      "title": "Mysterious Meetings and Sacred Relics",
       "date": "Ninth Day of Mirtul, Year 1492 DR (April 2, 2025)",
       "preview": "An intriguing day filled with unexpected opportunities and moral quandaries. We received word that someone called BlackJack Mel wished to meet with us....",
       "file": "entry-005.html",
@@ -91,15 +91,18 @@
   },
   "characters": {
     "Calithea Veyne": "Our protagonist - the wizard keeping this journal",
-    "Daven": "Pragmatic companion with mysterious past",
+    "Daven": "Pragmatic barbarian companion, dear friend of Calithea",
     "Ziri": "Fellow party member with distrust of Amethyst Academy",
     "Loric": "Friend of Daven, member of Hooded Lanterns",
-    "Theodore Marshall": "Knight Captain with history with Daven"
+    "Theodore Marshall": "Knight Captain with history with Daven",
+    "Blackjack Mel": "Point of contact for the Queen's Men",
+    "Euphoria": "Fellow party member, odd, borderline mad, and very inquisitive"
   },
   "locations": {
     "Drakkenheim": "The cursed, ruined city shrouded in magical haze",
     "Emberwood Village": "Last civilized settlement before Drakkenheim",
     "Camp Dawn": "Silver Order military encampment",
-    "Ratnest Tavern": "Abandoned tavern infested with ratlings"
+    "Ratnest Tavern": "Abandoned tavern infested with ratlings",
+    "Shephard's Gate": "Gate into Drakkenheim controlled by the Hooded Lanterns"
   }
 }
