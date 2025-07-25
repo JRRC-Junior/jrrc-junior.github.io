@@ -99,11 +99,25 @@
       "preview": "I find myself questioning how much of our business truly remains private in this city. The Queen of Thieves knows far more than she should – Daven's quest for vengeance...",
       "file": "entry-007.html",
       "tags": ["Queen's Men", "Blackjack Mel", "Reed Manor", "Oscar Joren"],
-      "session": 6,
+      "session": 7,
       "wordCount": 494,
       "featured": true,
       "locations": ["Reed Manor", "Emberwood Village", "Drakkenheim"],
       "characters": ["Ziri", "Calithea", "Daven", "Euphoria", "Queen of Thieves", "Oscar Joren", "Petra Lang"],
+      "themes": ["friendship", "growth", "artifacts", "heist"]
+    },
+    {
+      "id": 8,
+      "title": "The Reed Manor Infiltration",
+      "date": "May 6, 2025",
+      "preview": "What was meant to be a simple dinner invitation to Reed Manor has turned into one of the most harrowing experiences of our adventures thus far. Our goal seemed straightforward enough...",
+      "file": "entry-008.html",
+      "tags": ["Reed Manor", "Oscar Joren"],
+      "session": 8,
+      "wordCount": 591,
+      "featured": true,
+      "locations": ["Reed Manor", "Emberwood Village", "Drakkenheim", "Queen's Park Garden"],
+      "characters": ["Ziri", "Calithea", "Daven", "Euphoria", "Oscar Joren"],
       "themes": ["friendship", "growth", "artifacts", "heist"]
     }
   ],
