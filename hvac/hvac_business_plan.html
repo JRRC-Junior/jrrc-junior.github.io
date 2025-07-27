@@ -1,0 +1,1728 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HVAC Business Plan - Montreal, Quebec</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            margin-bottom: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .header h1 {
+            color: #2c3e50;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header .subtitle {
+            color: #7f8c8d;
+            font-size: 1.2em;
+            font-weight: 300;
+        }
+        
+        .section {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 25px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.15);
+        }
+        
+        .section h2 {
+            color: #2c3e50;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #3498db;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .icon {
+            font-size: 1.2em;
+        }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .card {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 10px;
+            padding: 20px;
+            border-left: 4px solid #3498db;
+            transition: all 0.3s ease;
+        }
+        
+        .card:hover {
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+            transform: translateX(5px);
+        }
+        
+        .card h3 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+        
+        .financial-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .financial-table th,
+        .financial-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .financial-table th {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.9em;
+            letter-spacing: 1px;
+        }
+        
+        .financial-table tr:hover {
+            background-color: #f8f9fa;
+            transform: scale(1.01);
+            transition: all 0.2s ease;
+        }
+        
+        .highlight {
+            background: linear-gradient(135deg, #e8f5e8, #c8e6c9);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+            border-left: 5px solid #27ae60;
+        }
+        
+        .warning {
+            background: linear-gradient(135deg, #fff3cd, #ffeaa7);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+            border-left: 5px solid #f39c12;
+        }
+        
+        .steps {
+            counter-reset: step-counter;
+        }
+        
+        .step {
+            counter-increment: step-counter;
+            background: white;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 10px;
+            border-left: 4px solid #9b59b6;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .step:hover {
+            background: #f8f9fa;
+            transform: translateX(10px);
+        }
+        
+        .step::before {
+            content: counter(step-counter);
+            position: absolute;
+            left: -15px;
+            top: 15px;
+            background: #9b59b6;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+        
+        .metric {
+            text-align: center;
+            padding: 20px;
+            background: linear-gradient(135deg, #74b9ff, #0984e3);
+            color: white;
+            border-radius: 10px;
+            margin: 10px 0;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .metric h3 {
+            font-size: 2em;
+            margin-bottom: 5px;
+        }
+        
+        .metric p {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+        
+        .timeline {
+            position: relative;
+            padding-left: 30px;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 15px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: #3498db;
+        }
+        
+        .timeline-item {
+            position: relative;
+            margin-bottom: 20px;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -25px;
+            top: 25px;
+            width: 12px;
+            height: 12px;
+            background: #3498db;
+            border-radius: 50%;
+            border: 3px solid white;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .header {
+                padding: 20px;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .section {
+                padding: 20px;
+            }
+            
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🏠 HVAC Business Plan</h1>
+            <p class="subtitle">Starting an HVAC Company in Montreal, Quebec</p>
+        </div>
+
+        <div class="section">
+            <h2><span class="icon">📊</span> Executive Summary</h2>
+            <div class="highlight">
+                <p><strong>Business Opportunity:</strong> Montreal's HVAC market presents excellent opportunities with extreme weather conditions requiring year-round heating and cooling solutions. The Quebec HVAC market is valued at approximately CAD $1.38 billion in 2025, growing at 5.7% annually.</p>
+            </div>
+            
+            <div class="grid">
+                <div class="metric">
+                    <h3>$75,000+</h3>
+                    <p>Average HVAC Technician Salary in Montreal</p>
+                </div>
+                <div class="metric">
+                    <h3>$587,000</h3>
+                    <p>Average Revenue per HVAC Company in Canada</p>
+                </div>
+                <div class="metric">
+                    <h3>7.21%</h3>
+                    <p>Expected Market Growth Rate (2025-2030)</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2><span class="icon">🎯</span> Market Analysis</h2>
+            
+            <div class="grid">
+                <div class="card">
+                    <h3>Market Size & Growth</h3>
+                    <p><strong>Quebec HVAC Market:</strong> CAD $1.38 billion (2025)</p>
+                    <p><strong>Growth Rate:</strong> 5.7% CAGR through 2033</p>
+                    <p><strong>Montreal Focus:</strong> Major urban center with high demand</p>
+                </div>
+                
+                <div class="card">
+                    <h3>Key Drivers</h3>
+                    <p>• Extreme weather conditions requiring reliable HVAC</p>
+                    <p>• Energy efficiency regulations and incentives</p>
+                    <p>• Growing focus on indoor air quality post-COVID</p>
+                    <p>• Replacement of aging HVAC systems</p>
+                </div>
+                
+                <div class="card">
+                    <h3>Target Markets</h3>
+                    <p><strong>Residential:</strong> Single-family homes, condos</p>
+                    <p><strong>Commercial:</strong> Offices, retail, restaurants</p>
+                    <p><strong>Industrial:</strong> Warehouses, manufacturing</p>
+                    <p><strong>Institutional:</strong> Schools, hospitals</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2><span class="icon">📋</span> Licensing & Regulatory Requirements</h2>
+            
+            <div class="warning">
+                <p><strong>Important:</strong> Quebec has strict licensing requirements for HVAC work. All technicians must be properly certified before performing any HVAC installations or repairs.</p>
+            </div>
+            
+            <div class="steps">
+                <div class="step">
+                    <h3>Certificate of Qualification (C of Q)</h3>
+                    <p>Required from Emploi-Québec for HVAC technicians. Involves apprenticeship program and examination.</p>
+                </div>
+                
+                <div class="step">
+                    <h3>RBQ License</h3>
+                    <p>Régie du bâtiment du Québec license required for business operation and to bid on construction projects.</p>
+                </div>
+                
+                <div class="step">
+                    <h3>Gas Technician License</h3>
+                    <p>Required for working with natural gas and propane systems. Multiple levels (G1, G2, G3) available.</p>
+                </div>
+                
+                <div class="step">
+                    <h3>Business Registration</h3>
+                    <p>Register business with Registraire des entreprises du Québec and obtain necessary permits.</p>
+                </div>
+                
+                <div class="step">
+                    <h3>Insurance Requirements</h3>
+                    <p>General liability insurance ($2M+), professional liability, and workers' compensation insurance required.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2><span class="icon">🛡️</span> Insurance, CRM Software & Office Setup</h2>
+            
+            <h3>Business Insurance Requirements & Pricing</h3>
+            
+            <div class="warning">
+                <p><strong>Critical:</strong> Without proper RBQ license, no insurance company in Canada can provide you with the right coverage. Claims may be denied and you may receive additional fines from the RBQ.</p>
+            </div>
+            
+            <table class="financial-table">
+                <thead>
+                    <tr>
+                        <th>Insurance Type</th>
+                        <th>Coverage Amount</th>
+                        <th>Annual Cost (CAD)</th>
+                        <th>Recommended Providers</th>
+                        <th>Notes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="background-color: #e8f5e8;">
+                        <td><strong>Commercial General Liability</strong></td>
+                        <td>$2,000,000</td>
+                        <td>$1,200-$2,500</td>
+                        <td>KBD Insurance, Federated Insurance</td>
+                        <td>Covers third-party injury/property damage</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Commercial Auto Insurance</strong></td>
+                        <td>$1,000,000</td>
+                        <td>$2,000-$3,500</td>
+                        <td>TD Insurance, BFL Canada</td>
+                        <td>Required for work vehicles</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Tools & Equipment</strong></td>
+                        <td>Up to $100,000</td>
+                        <td>$500-$1,200</td>
+                        <td>KBD Insurance, Zensurance</td>
+                        <td>Covers theft, damage to tools</td>
+                    </tr>
+                    <tr>
+                        <td><strong>RBQ License Bond</strong></td>
+                        <td>$20,000</td>
+                        <td>$200-$400</td>
+                        <td>KBD Insurance, Lloyd's of London</td>
+                        <td>Mandatory for RBQ license</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Professional Liability</strong></td>
+                        <td>$1,000,000</td>
+                        <td>$800-$1,500</td>
+                        <td>Intact Insurance, BFL Canada</td>
+                        <td>Errors & omissions coverage</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Workers' Compensation</strong></td>
+                        <td>Per payroll</td>
+                        <td>$1,500-$3,000</td>
+                        <td>CNESST (Quebec)</td>
+                        <td>Mandatory with employees</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Cyber Liability</strong></td>
+                        <td>$1,000,000</td>
+                        <td>$400-$800</td>
+                        <td>Covalen, TruShield</td>
+                        <td>Data breach protection</td>
+                    </tr>
+                    <tr style="background-color: #fff3cd; font-weight: bold;">
+                        <td><strong>TOTAL ANNUAL COST</strong></td>
+                        <td>-</td>
+                        <td><strong>$6,600-$12,900</strong></td>
+                        <td>Multiple providers</td>
+                        <td>First year: $8,000-$15,000</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div class="grid">
+                <div class="card">
+                    <h3>KBD Insurance (Montreal Specialist)</h3>
+                    <p><strong>Focus:</strong> HVAC & trades insurance</p>
+                    <p><strong>Partnership:</strong> Lloyd's of London program</p>
+                    <p><strong>Benefits:</strong> Dedicated trade specialist, 5-minute online quotes</p>
+                    <p><strong>Support:</strong> Dedicated representative for all needs</p>
+                </div>
+                
+                <div class="card">
+                    <h3>BFL Canada (Montreal Office)</h3>
+                    <p><strong>Scope:</strong> Global risk management leader</p>
+                    <p><strong>Services:</strong> Complete commercial insurance solutions</p>
+                    <p><strong>Locations:</strong> Montreal, Laval, Brossard offices</p>
+                    <p><strong>Expertise:</strong> Industry-specific coverage solutions</p>
+                </div>
+            </div>
+            
+            <h3>HVAC CRM Software Comparison</h3>
+            
+            <table class="financial-table">
+                <thead>
+                    <tr>
+                        <th>Software</th>
+                        <th>Monthly Cost</th>
+                        <th>Best For</th>
+                        <th>Key Features</th>
+                        <th>Integration</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="background-color: #e8f5e8;">
+                        <td><strong>ServiceTitan</strong></td>
+                        <td>$300-$600/month</td>
+                        <td>Growing HVAC companies (10+ employees)</td>
+                        <td>Complete business management, advanced reporting</td>
+                        <td>QuickBooks, Intacct, Sage</td>
+                    </tr>
+                    <tr>
+                        <td><strong>FieldEdge</strong></td>
+                        <td>$89-$199/month</td>
+                        <td>Small-medium HVAC businesses (2-50 employees)</td>
+                        <td>Flat rate pricing, real-time dispatch, mobile app</td>
+                        <td>QuickBooks integration</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Jobber</strong></td>
+                        <td>$49-$249/month</td>
+                        <td>Small businesses (1-30 employees)</td>
+                        <td>Simple scheduling, invoicing, customer management</td>
+                        <td>QuickBooks, payment processing</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Housecall Pro</strong></td>
+                        <td>$61-$169/month</td>
+                        <td>Home service startups</td>
+                        <td>Easy scheduling, estimates, customer communication</td>
+                        <td>QuickBooks, payment gateway</td>
+                    </tr>
+                    <tr>
+                        <td><strong>ServiceM8</strong></td>
+                        <td>$29-$89/month</td>
+                        <td>Small HVAC businesses (<30 staff)</td>
+                        <td>Mobile-first, simple interface, forms</td>
+                        <td>Accounting packages</td>
+                    </tr>
+                    <tr>
+                        <td><strong>ServiceBox</strong></td>
+                        <td>$79-$199/month</td>
+                        <td>Commercial HVAC focus</td>
+                        <td>Service agreements, maintenance schedules</td>
+                        <td>QuickBooks, Sage 50 Canada</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div class="highlight">
+                <p><strong>Recommended Starter:</strong> FieldEdge Basic ($89/month) or Jobber Core ($49/month) for first year, upgrade to ServiceTitan as you grow past 10 employees.</p>
+            </div>
+            
+            <h3>Office Setup & Communication</h3>
+            
+            <table class="financial-table">
+                <thead>
+                    <tr>
+                        <th>Service</th>
+                        <th>Provider</th>
+                        <th>Monthly Cost</th>
+                        <th>Features</th>
+                        <th>Setup Cost</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Business Internet</strong></td>
+                        <td>Oxio Fiber (Montreal)</td>
+                        <td>$65</td>
+                        <td>500/500 Mbps symmetrical, no price increases</td>
+                        <td>$0</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Business Internet (Alt)</strong></td>
+                        <td>Videotron Business</td>
+                        <td>$79.95</td>
+                        <td>200 Mbps hybrid fiber</td>
+                        <td>$99</td>
+                    </tr>
+                    <tr>
+                        <td><strong>VoIP Phone System</strong></td>
+                        <td>OpenPhone</td>
+                        <td>$20 USD/user</td>
+                        <td>Canadian numbers, mobile app, team features</td>
+                        <td>$0</td>
+                    </tr>
+                    <tr>
+                        <td><strong>VoIP (Alternative)</strong></td>
+                        <td>VoIP.ms (Montreal)</td>
+                        <td>$5 + usage</td>
+                        <td>Pay-per-minute, Microsoft Teams integration</td>
+                        <td>$25</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Mobile Plans</strong></td>
+                        <td>Fizz (Quebec)</td>
+                        <td>$45-$65/line</td>
+                        <td>Unlimited Canada, data rollover</td>
+                        <td>$0</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Office Suite</strong></td>
+                        <td>Microsoft 365 Business</td>
+                        <td>$8.25/user</td>
+                        <td>Email, Office apps, cloud storage</td>
+                        <td>$0</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Accounting Software</strong></td>
+                        <td>QuickBooks Online Plus</td>
+                        <td>$60</td>
+                        <td>Invoicing, payroll, expense tracking</td>
+                        <td>$0</td>
+                    </tr>
+                    <tr style="background-color: #e8f5e8; font-weight: bold;">
+                        <td><strong>TOTAL MONTHLY</strong></td>
+                        <td>Multiple providers</td>
+                        <td><strong>$280-$350</strong></td>
+                        <td>Complete office communication setup</td>
+                        <td><strong>$150-$200</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div class="grid">
+                <div class="card">
+                    <h3>Home Office Setup</h3>
+                    <p><strong>Recommended for startups:</strong></p>
+                    <p>• Dedicated business line/address</p>
+                    <p>• Professional office space in home</p>
+                    <p>• Separate business entrance if possible</p>
+                    <p><strong>Cost:</strong> $500-$2,000 setup</p>
+                </div>
+                
+                <div class="card">
+                    <h3>Small Commercial Space</h3>
+                    <p><strong>Montreal warehouse/office:</strong></p>
+                    <p>• 1,000-2,000 sq ft: $12-$18/sq ft annually</p>
+                    <p>• Includes parking, loading dock</p>
+                    <p>• Professional business address</p>
+                    <p><strong>Cost:</strong> $1,000-$3,000/month</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2><span class="icon">📱</span> Marketing & Brand Development</h2>
+            
+            <h3>Digital Marketing Agencies (Quebec Specialists)</h3>
+            
+            <table class="financial-table">
+                <thead>
+                    <tr>
+                        <th>Agency</th>
+                        <th>Location</th>
+                        <th>Specialization</th>
+                        <th>Monthly Cost</th>
+                        <th>Services Included</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="background-color: #e8f5e8;">
+                        <td><strong>Blue Collar Marketing</strong></td>
+                        <td>Ontario (Serves Quebec)</td>
+                        <td>HVAC & contractors</td>
+                        <td>$2,000-$5,000</td>
+                        <td>Website, SEO, social media, logo design</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Leadstream</strong></td>
+                        <td>Montreal</td>
+                        <td>SEO, PPC, lead generation</td>
+                        <td>$1,500-$4,000</td>
+                        <td>Local SEO, Google Ads, conversion optimization</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Web Tonic</strong></td>
+                        <td>Quebec</td>
+                        <td>Digital marketing</td>
+                        <td>$1,000-$3,000</td>
+                        <td>SEO, web design, social media management</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Profitworks</strong></td>
+                        <td>Canada-wide</td>
+                        <td>HVAC digital marketing</td>
+                        <td>$1,500-$3,500</td>
+                        <td>SEO, PPC, website optimization</td>
+                    </tr>
+                    <tr>
+                        <td><strong>MTA360</strong></td>
+                        <td>HVAC specialist</td>
+                        <td>Complete HVAC marketing</td>
+                        <td>$2,500-$6,000</td>
+                        <td>Custom websites, SEO, analytics, branding</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <h3>DIY Marketing Setup (Budget Option)</h3>
+            
+            <table class="financial-table">
+                <thead>
+                    <tr>
+                        <th>Marketing Component</th>
+                        <th>Platform/Service</th>
+                        <th>Monthly Cost</th>
+                        <th>Setup Cost</th>
+                        <th>DIY Difficulty</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Website & Hosting</strong></td>
+                        <td>WordPress + Hosting</td>
+                        <td>$25-$50</td>
+                        <td>$500-$2,000</td>
+                        <td>Medium</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Google Ads</strong></td>
+                        <td>Google Ads Platform</td>
+                        <td>$500-$2,000</td>
+                        <td>$200</td>
+                        <td>High</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Social Media</strong></td>
+                        <td>Facebook/Instagram Business</td>
+                        <td>$200-$500</td>
+                        <td>$100</td>
+                        <td>Low</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Local SEO</strong></td>
+                        <td>Google Business Profile</td>
+                        <td>$0</td>
+                        <td>$50</td>
+                        <td>Low</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Email Marketing</strong></td>
+                        <td>Mailchimp/Constant Contact</td>
+                        <td>$20-$50</td>
+                        <td>$100</td>
+                        <td>Low</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Logo & Branding</strong></td>
+                        <td>Freelancer/Fiverr</td>
+                        <td>$0</td>
+                        <td>$300-$1,000</td>
+                        <td>Low</td>
+                    </tr>
+                    <tr style="background-color: #e8f5e8; font-weight: bold;">
+                        <td><strong>TOTAL DIY OPTION</strong></td>
+                        <td>Multiple platforms</td>
+                        <td><strong>$745-$2,600</strong></td>
+                        <td><strong>$1,250-$3,450</strong></td>
+                        <td>Medium overall</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <h3>Professional Marketing Setup (Recommended)</h3>
+            
+            <div class="grid">
+                <div class="card">
+                    <h3>Phase 1: Foundation (Months 1-3)</h3>
+                    <p><strong>Investment:</strong> $3,000-$5,000</p>
+                    <p>• Professional website design</p>
+                    <p>• Logo and branding package</p>
+                    <p>• Google Business Profile optimization</p>
+                    <p>• Basic SEO setup</p>
+                </div>
+                
+                <div class="card">
+                    <h3>Phase 2: Growth (Months 4-12)</h3>
+                    <p><strong>Monthly:</strong> $1,500-$3,000</p>
+                    <p>• Local SEO optimization</p>
+                    <p>• Google Ads management</p>
+                    <p>• Social media marketing</p>
+                    <p>• Content creation</p>
+                </div>
+                
+                <div class="card">
+                    <h3>Phase 3: Scale (Year 2+)</h3>
+                    <p><strong>Monthly:</strong> $2,500-$5,000</p>
+                    <p>• Advanced PPC campaigns</p>
+                    <p>• Video marketing</p>
+                    <p>• Reputation management</p>
+                    <p>• Advanced analytics & optimization</p>
+                </div>
+            </div>
+            
+            <h3>Marketing ROI Expectations</h3>
+            
+            <div class="highlight">
+                <p><strong>Industry Benchmarks for HVAC Marketing:</strong></p>
+                <p>• <strong>Average Customer Value:</strong> $3,500-$8,000 (installation projects)</p>
+                <p>• <strong>Service Call Value:</strong> $200-$500</p>
+                <p>• <strong>Digital Marketing ROI:</strong> 3:1 to 8:1 return on investment</p>
+                <p>• <strong>Cost Per Lead:</strong> $50-$200 (depending on service type)</p>
+                <p>• <strong>Conversion Rate:</strong> 15-25% (leads to customers)</p>
+            </div>
+            
+            <div class="warning">
+                <p><strong>Quebec Marketing Considerations:</strong> All marketing materials must comply with Bill 96 French language requirements. Consider bilingual marketing approach for Montreal market.</p>
+            </div>
+            
+            <h3>Marketing Budget Recommendations</h3>
+            
+            <table class="financial-table">
+                <thead>
+                    <tr>
+                        <th>Business Stage</th>
+                        <th>Annual Revenue</th>
+                        <th>Marketing Budget</th>
+                        <th>Monthly Investment</th>
+                        <th>Focus Areas</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Startup (Year 1)</strong></td>
+                        <td>$350,000</td>
+                        <td>$17,500 (5%)</td>
+                        <td>$1,500</td>
+                        <td>Local SEO, Google Ads, website</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Growth (Year 2)</strong></td>
+                        <td>$525,000</td>
+                        <td>$31,500 (6%)</td>
+                        <td>$2,600</td>
+                        <td>Expanded PPC, social media, content</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Established (Year 3+)</strong></td>
+                        <td>$750,000+</td>
+                        <td>$52,500+ (7%)</td>
+                        <td>$4,400+</td>
+                        <td>Brand building, video, reputation mgmt</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+            
+            <h3>Essential HVAC Tools & Equipment with Suppliers</h3>
+            
+            <div class="grid">
+                <div class="card">
+                    <h3>Primary Quebec/Montreal Suppliers</h3>
+                    <p><strong>Powrmatic Canada Ltd:</strong> Eastern Canada's largest HVAC distributor (Montreal)</p>
+                    <p><strong>Snowdon HVAC:</strong> Leading parts distributor with Saint-Laurent location</p>
+                    <p><strong>E.H. Price Quebec:</strong> Commercial HVAC systems and support</p>
+                    <p><strong>Midbec:</strong> 9 branches across Quebec for parts</p>
+                </div>
+                
+                <div class="card">
+                    <h3>Major Equipment Brands Available</h3>
+                    <p><strong>HVAC Systems:</strong> Trane, Carrier, Lennox, Goodman, Tempstar</p>
+                    <p><strong>Tools:</strong> Fieldpiece, Yellow Jacket, Klein Tools, Milwaukee</p>
+                    <p><strong>Parts:</strong> Armstrong, Little Giant, Fasco, Gates</p>
+                    <p><strong>Test Equipment:</strong> Testo, CPS, NAVAC</p>
+                </div>
+            </div>
+            
+            <h3>Detailed Tool & Equipment Pricing</h3>
+            
+            <table class="financial-table">
+                <thead>
+                    <tr>
+                        <th>Category</th>
+                        <th>Essential Items</th>
+                        <th>Price Range (CAD)</th>
+                        <th>Recommended Brands</th>
+                        <th>Supplier</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="background-color: #e8f5e8;">
+                        <td><strong>Basic Hand Tools</strong></td>
+                        <td>Screwdrivers, pliers, wrenches, measuring tools</td>
+                        <td>$300-$600</td>
+                        <td>Klein Tools, Milwaukee</td>
+                        <td>Home Depot, Tool Store Canada</td>
+                    </tr>
+                    <tr>
+                        <td><strong>HVAC Manifold Gauges</strong></td>
+                        <td>Digital 4-valve manifold with hoses</td>
+                        <td>$800-$1,500</td>
+                        <td>Fieldpiece SM480V, Yellow Jacket TitanMax</td>
+                        <td>HVAC & Tools Direct, Test Equipment Depot</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Refrigerant Recovery Unit</strong></td>
+                        <td>Portable recovery/recycling system</td>
+                        <td>$2,500-$4,500</td>
+                        <td>CPS, NAVAC, Robinair</td>
+                        <td>Powrmatic, Snowdon HVAC</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Vacuum Pump</strong></td>
+                        <td>Two-stage rotary vane pump (6-12 CFM)</td>
+                        <td>$400-$800</td>
+                        <td>Robinair, Yellow Jacket, CPS</td>
+                        <td>HVAC & Tools Direct</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Leak Detection</strong></td>
+                        <td>Electronic leak detector + UV dye kit</td>
+                        <td>$300-$600</td>
+                        <td>Bacharach, Inficon, CPS</td>
+                        <td>Test Equipment Depot</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Tube Cutting & Flaring</strong></td>
+                        <td>Pipe cutters, flaring tool, bending kit</td>
+                        <td>$250-$500</td>
+                        <td>Rigid, Imperial, Hilmor</td>
+                        <td>Home Depot, Snowdon HVAC</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Digital Multimeter</strong></td>
+                        <td>HVAC-specific with temperature clamps</td>
+                        <td>$200-$400</td>
+                        <td>Fieldpiece SC660, Fluke</td>
+                        <td>HVAC & Tools Direct</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Power Tools</strong></td>
+                        <td>Drill, impact driver, reciprocating saw</td>
+                        <td>$400-$800</td>
+                        <td>Milwaukee, DeWalt, Makita</td>
+                        <td>Home Depot, Canadian Tire</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Safety Equipment</strong></td>
+                        <td>Safety glasses, gloves, hard hat, harness</td>
+                        <td>$200-$400</td>
+                        <td>3M, Honeywell, MSA</td>
+                        <td>Home Depot, Safety Supply Canada</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Sheet Metal Tools</strong></td>
+                        <td>Snips, seamers, crimper, hole saw kit</td>
+                        <td>$300-$600</td>
+                        <td>Klein Tools, Malco, Midwest</td>
+                        <td>Tool Store Canada</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Specialty Tools</strong></td>
+                        <td>Thermal camera, refrigerant scale, psychrometer</td>
+                        <td>$1,500-$3,000</td>
+                        <td>FLIR, Fieldpiece, Testo</td>
+                        <td>Test Equipment Depot</td>
+                    </tr>
+                    <tr style="background-color: #fff3cd; font-weight: bold;">
+                        <td><strong>TOTAL TOOLS</strong></td>
+                        <td>Complete professional setup</td>
+                        <td><strong>$8,000-$15,000</strong></td>
+                        <td>Mixed premium brands</td>
+                        <td>Multiple suppliers</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <h3>Vehicle Options & Upfitting</h3>
+            
+            <table class="financial-table">
+                <thead>
+                    <tr>
+                        <th>Vehicle Type</th>
+                        <th>Base Price (CAD)</th>
+                        <th>Upfit Cost</th>
+                        <th>Total Investment</th>
+                        <th>Best For</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>RAM ProMaster 1500</strong></td>
+                        <td>$42,000-$48,000</td>
+                        <td>$6,000-$8,000</td>
+                        <td>$48,000-$56,000</td>
+                        <td>Residential service, fuel efficiency</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Ford Transit 250/350</strong></td>
+                        <td>$45,000-$52,000</td>
+                        <td>$6,500-$8,500</td>
+                        <td>$51,500-$60,500</td>
+                        <td>Mixed residential/commercial</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Chevrolet Express 2500</strong></td>
+                        <td>$43,000-$49,000</td>
+                        <td>$5,500-$7,500</td>
+                        <td>$48,500-$56,500</td>
+                        <td>Heavy-duty commercial work</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Mercedes Sprinter</strong></td>
+                        <td>$55,000-$65,000</td>
+                        <td>$6,500-$8,500</td>
+                        <td>$61,500-$73,500</td>
+                        <td>Premium service, reliability</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Used Options (2020-2022)</strong></td>
+                        <td>$28,000-$38,000</td>
+                        <td>$5,000-$7,000</td>
+                        <td>$33,000-$45,000</td>
+                        <td>Budget-conscious startup</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div class="highlight">
+                <p><strong>Recommended Starter Setup:</strong> Used Ford Transit 250 ($35,000) + Van Pro Inc. HVAC package ($6,500) = $41,500 total</p>
+            </div>
+            
+            <h3>Van Upfitting Specifications (Van Pro Inc. - Montreal)</h3>
+            
+            <div class="grid">
+                <div class="card">
+                    <h3>Ford Transit HVAC Package (FTM-12)</h3>
+                    <p><strong>Price:</strong> $6,578 CAD</p>
+                    <p><strong>Includes:</strong></p>
+                    <p>• 77 Series aluminum shelving system</p>
+                    <p>• Multiple adjustable shelves and bins</p>
+                    <p>• Pipe/tube storage racks</p>
+                    <p>• Tool organization panels</p>
+                    <p>• LED interior lighting</p>
+                </div>
+                
+                <div class="card">
+                    <h3>RAM ProMaster Package (RPS-12)</h3>
+                    <p><strong>Price:</strong> $6,091 CAD</p>
+                    <p><strong>Features:</strong></p>
+                    <p>• N5 Series steel shelving</p>
+                    <p>• Lockable storage compartments</p>
+                    <p>• Ladder rack compatibility</p>
+                    <p>• Professional appearance</p>
+                    <p>• Easy access design</p>
+                </div>
+                
+                <div class="card">
+                    <h3>Additional Upfit Options</h3>
+                    <p><strong>Ladder Rack:</strong> $800-$1,200</p>
+                    <p><strong>Safety Partition:</strong> $400-$600</p>
+                    <p><strong>Vinyl Flooring:</strong> $300-$500</p>
+                    <p><strong>External Tool Boxes:</strong> $500-$800</p>
+                    <p><strong>Inverter System:</strong> $400-$700</p>
+                </div>
+            </div>
+            
+            <h3>Initial Inventory & Supplies</h3>
+            
+            <table class="financial-table">
+                <thead>
+                    <tr>
+                        <th>Supply Category</th>
+                        <th>Items</th>
+                        <th>Starter Quantity</th>
+                        <th>Cost (CAD)</th>
+                        <th>Supplier</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Filters</strong></td>
+                        <td>Common residential sizes (16x20, 20x25, etc.)</td>
+                        <td>50 units mixed</td>
+                        <td>$300-$500</td>
+                        <td>Powrmatic, Midbec</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Refrigerants</strong></td>
+                        <td>R-410A, R-22 (30 lb cylinders)</td>
+                        <td>2 cylinders each</td>
+                        <td>$800-$1,200</td>
+                        <td>Snowdon HVAC</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Electrical Components</strong></td>
+                        <td>Contactors, capacitors, fuses, wire nuts</td>
+                        <td>Starter kit</td>
+                        <td>$400-$600</td>
+                        <td>Powrmatic</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Copper Tubing</strong></td>
+                        <td>1/4", 3/8", 1/2", 5/8" (50 ft coils)</td>
+                        <td>2 coils each size</td>
+                        <td>$600-$900</td>
+                        <td>Snowdon HVAC</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Insulation</strong></td>
+                        <td>Pipe insulation, duct tape, mastic</td>
+                        <td>Mixed starter pack</td>
+                        <td>$300-$500</td>
+                        <td>Home Depot</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Fasteners & Hardware</strong></td>
+                        <td>Screws, bolts, brackets, mounting hardware</td>
+                        <td>Assorted bins</td>
+                        <td>$200-$400</td>
+                        <td>Home Depot, Powrmatic</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Cleaning Supplies</strong></td>
+                        <td>Coil cleaner, refrigerant oil, leak stop</td>
+                        <td>Starter chemicals</td>
+                        <td>$200-$350</td>
+                        <td>Snowdon HVAC</td>
+                    </tr>
+                    <tr style="background-color: #e8f5e8; font-weight: bold;">
+                        <td><strong>TOTAL INVENTORY</strong></td>
+                        <td>3-month starter supply</td>
+                        <td>-</td>
+                        <td><strong>$2,800-$4,450</strong></td>
+                        <td>Multiple suppliers</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <h3>Supplier Contact Information & Account Setup</h3>
+            
+            <div class="grid">
+                <div class="card">
+                    <h3>Powrmatic Canada Ltd (Montreal)</h3>
+                    <p><strong>Services:</strong> HVAC equipment, parts, training</p>
+                    <p><strong>Account Requirements:</strong> RBQ license, credit application</p>
+                    <p><strong>Benefits:</strong> Volume discounts, technical support</p>
+                    <p><strong>Delivery:</strong> Same-day Montreal, next-day regional</p>
+                </div>
+                
+                <div class="card">
+                    <h3>Snowdon HVAC (Saint-Laurent)</h3>
+                    <p><strong>Specialties:</strong> Motors, blowers, pumps, belts</p>
+                    <p><strong>Location:</strong> 4 locations in Quebec/Ontario</p>
+                    <p><strong>Advantages:</strong> Extensive parts inventory</p>
+                    <p><strong>Payment Terms:</strong> Net 30 with approved credit</p>
+                </div>
+                
+                <div class="card">
+                    <h3>Van Pro Inc. (Montreal/Ottawa)</h3>
+                    <p><strong>Services:</strong> Commercial van upfitting</p>
+                    <p><strong>Packages:</strong> Complete HVAC van solutions</p>
+                    <p><strong>Installation:</strong> Professional upfit services</p>
+                    <p><strong>Warranty:</strong> Full installation warranty</p>
+                </div>
+                
+                <div class="card">
+                    <h3>HVAC & Tools Direct (Online)</h3>
+                    <p><strong>Products:</strong> Professional tools, test equipment</p>
+                    <p><strong>Brands:</strong> Fieldpiece, Yellow Jacket, CPS</p>
+                    <p><strong>Shipping:</strong> Canada-wide delivery</p>
+                    <p><strong>Support:</strong> Technical assistance available</p>
+                </div>
+            </div>
+            
+            <div class="warning">
+                <p><strong>Pro Tip:</strong> Establish accounts with multiple suppliers before starting. Quebec suppliers often require RBQ license verification and credit applications. Plan 2-4 weeks for account approval process.</p>
+            </div>
+        </div>
+            
+            <table class="financial-table">
+                <thead>
+                    <tr>
+                        <th>Category</th>
+                        <th>Low Estimate</th>
+                        <th>High Estimate</th>
+                        <th>Notes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Licensing & Permits</strong></td>
+                        <td>$5,000</td>
+                        <td>$15,000</td>
+                        <td>RBQ license, certifications, permits</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Tools & Equipment</strong></td>
+                        <td>$8,000</td>
+                        <td>$15,000</td>
+                        <td>Professional HVAC tools, manifolds, recovery unit</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Vehicle & Upfitting</strong></td>
+                        <td>$35,000</td>
+                        <td>$65,000</td>
+                        <td>Used/new van with professional HVAC upfit package</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Initial Inventory</strong></td>
+                        <td>$3,000</td>
+                        <td>$5,000</td>
+                        <td>Filters, refrigerants, common parts, supplies</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Insurance (1st Year)</strong></td>
+                        <td>$8,000</td>
+                        <td>$15,000</td>
+                        <td>General liability, commercial auto, WCB</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Marketing & Branding</strong></td>
+                        <td>$5,000</td>
+                        <td>$15,000</td>
+                        <td>Website, signage, advertising</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Software & Office Setup</strong></td>
+                        <td>$3,000</td>
+                        <td>$8,000</td>
+                        <td>CRM, accounting, scheduling software</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Working Capital</strong></td>
+                        <td>$25,000</td>
+                        <td>$50,000</td>
+                        <td>3-6 months operating expenses</td>
+                    </tr>
+                    <tr style="background-color: #e8f5e8; font-weight: bold;">
+                        <td><strong>TOTAL STARTUP COSTS</strong></td>
+                        <td><strong>$99,000</strong></td>
+                        <td><strong>$223,000</strong></td>
+                        <td><strong>Recommended: $140,000-$170,000</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="section">
+            <h2><span class="icon">📈</span> Revenue Projections & Financial Analysis</h2>
+            
+            <div class="grid">
+                <div class="card">
+                    <h3>Service Pricing (Montreal Market)</h3>
+                    <p><strong>Service Calls:</strong> $150-$250</p>
+                    <p><strong>Residential Installation:</strong> $3,000-$8,000</p>
+                    <p><strong>Commercial Projects:</strong> $10,000-$100,000+</p>
+                    <p><strong>Maintenance Contracts:</strong> $200-$500/year</p>
+                </div>
+                
+                <div class="card">
+                    <h3>Revenue Streams</h3>
+                    <p><strong>Installation (40%):</strong> New system installations</p>
+                    <p><strong>Service & Repair (35%):</strong> Emergency and scheduled repairs</p>
+                    <p><strong>Maintenance (15%):</strong> Annual service contracts</p>
+                    <p><strong>Retrofits (10%):</strong> System upgrades and improvements</p>
+                </div>
+            </div>
+            
+            <h3>5-Year Financial Projections</h3>
+            <table class="financial-table">
+                <thead>
+                    <tr>
+                        <th>Year</th>
+                        <th>Revenue</th>
+                        <th>Gross Profit</th>
+                        <th>Operating Expenses</th>
+                        <th>Net Income</th>
+                        <th>ROI</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Year 1</td>
+                        <td>$350,000</td>
+                        <td>$210,000</td>
+                        <td>$180,000</td>
+                        <td>$30,000</td>
+                        <td>17%</td>
+                    </tr>
+                    <tr>
+                        <td>Year 2</td>
+                        <td>$525,000</td>
+                        <td>$315,000</td>
+                        <td>$240,000</td>
+                        <td>$75,000</td>
+                        <td>42%</td>
+                    </tr>
+                    <tr>
+                        <td>Year 3</td>
+                        <td>$750,000</td>
+                        <td>$450,000</td>
+                        <td>$320,000</td>
+                        <td>$130,000</td>
+                        <td>72%</td>
+                    </tr>
+                    <tr>
+                        <td>Year 4</td>
+                        <td>$950,000</td>
+                        <td>$570,000</td>
+                        <td>$385,000</td>
+                        <td>$185,000</td>
+                        <td>103%</td>
+                    </tr>
+                    <tr style="background-color: #e8f5e8; font-weight: bold;">
+                        <td>Year 5</td>
+                        <td>$1,200,000</td>
+                        <td>$720,000</td>
+                        <td>$450,000</td>
+                        <td>$270,000</td>
+                        <td>150%</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div class="highlight">
+                <p><strong>Key Financial Metrics:</strong></p>
+                <p>• <strong>Break-even:</strong> Month 8-12 depending on growth rate</p>
+                <p>• <strong>Average Gross Margin:</strong> 60% (industry standard 55-65%)</p>
+                <p>• <strong>Customer Acquisition Cost:</strong> $150-$300 per customer</p>
+                <p>• <strong>Average Customer Lifetime Value:</strong> $3,500-$8,000</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2><span class="icon">🚀</span> Implementation Timeline</h2>
+            
+            <div class="timeline">
+                <div class="timeline-item">
+                    <h3>Months 1-2: Foundation & Licensing</h3>
+                    <p>• Complete certification requirements and apprenticeship</p>
+                    <p>• Obtain RBQ license and gas technician certifications</p>
+                    <p>• Register business and secure initial funding</p>
+                </div>
+                
+                <div class="timeline-item">
+                    <h3>Months 3-4: Equipment & Setup</h3>
+                    <p>• Purchase tools, equipment, and work vehicle</p>
+                    <p>• Set up business systems (CRM, accounting, scheduling)</p>
+                    <p>• Secure insurance and establish supplier relationships</p>
+                </div>
+                
+                <div class="timeline-item">
+                    <h3>Months 5-6: Marketing & Launch</h3>
+                    <p>• Develop brand identity and marketing materials</p>
+                    <p>• Build website and establish online presence</p>
+                    <p>• Network with contractors and begin service operations</p>
+                </div>
+                
+                <div class="timeline-item">
+                    <h3>Months 7-12: Growth & Optimization</h3>
+                    <p>• Focus on customer acquisition and retention</p>
+                    <p>• Develop maintenance contract customer base</p>
+                    <p>• Consider hiring first employee or subcontractor</p>
+                </div>
+                
+                <div class="timeline-item">
+                    <h3>Year 2+: Expansion</h3>
+                    <p>• Add specialized services (geothermal, commercial)</p>
+                    <p>• Expand team and consider additional service areas</p>
+                    <p>• Develop strategic partnerships with builders/contractors</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2><span class="icon">⚠️</span> Risks & Mitigation Strategies</h2>
+            
+            <div class="grid">
+                <div class="card">
+                    <h3>Seasonal Demand Fluctuations</h3>
+                    <p><strong>Risk:</strong> Peak demand in summer/winter, slower spring/fall</p>
+                    <p><strong>Mitigation:</strong> Develop maintenance contracts, offer seasonal promotions, diversify services</p>
+                </div>
+                
+                <div class="card">
+                    <h3>Competition</h3>
+                    <p><strong>Risk:</strong> Established competitors with brand recognition</p>
+                    <p><strong>Mitigation:</strong> Focus on superior customer service, competitive pricing, niche specialization</p>
+                </div>
+                
+                <div class="card">
+                    <h3>Skilled Labor Shortage</h3>
+                    <p><strong>Risk:</strong> 49.5% of construction companies report recruiting challenges</p>
+                    <p><strong>Mitigation:</strong> Offer competitive wages, training programs, good working conditions</p>
+                </div>
+                
+                <div class="card">
+                    <h3>Economic Downturns</h3>
+                    <p><strong>Risk:</strong> Reduced discretionary spending on HVAC upgrades</p>
+                    <p><strong>Mitigation:</strong> Focus on essential services, financing options, government rebate programs</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2><span class="icon">👥</span> Organizational Structure & Staffing</h2>
+            
+            <h3>Employee Hierarchy & Minimum Viable Team</h3>
+            <table class="financial-table">
+                <thead>
+                    <tr>
+                        <th>Position</th>
+                        <th>Required Certifications</th>
+                        <th>Annual Salary (CAD)</th>
+                        <th>When to Hire</th>
+                        <th>Key Responsibilities</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="background-color: #e8f5e8;">
+                        <td><strong>CEO/Owner/Founder</strong></td>
+                        <td>RBQ Business Admin Exam, Business Management</td>
+                        <td>$80,000-$120,000</td>
+                        <td>Day 1</td>
+                        <td>Strategy, Sales, Business Guarantor, Client Relations</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Lead HVAC Technician</strong></td>
+                        <td>C of Q, G2 Gas License, 5+ years experience, Technical Guarantor</td>
+                        <td>$75,000-$85,000</td>
+                        <td>Day 1 (or Month 1)</td>
+                        <td>Complex installations, Technical Guarantor, Quality assurance</td>
+                    </tr>
+                    <tr>
+                        <td><strong>HVAC Technician</strong></td>
+                        <td>C of Q, G3 Gas License minimum</td>
+                        <td>$60,000-$75,000</td>
+                        <td>Month 10-12</td>
+                        <td>Service calls, Basic installations, Maintenance</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Apprentice Technician</strong></td>
+                        <td>Enrolled in apprenticeship program</td>
+                        <td>$40,000-$50,000</td>
+                        <td>Year 2</td>
+                        <td>Assist installations, Learn trade, Parts management</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Administrative Assistant</strong></td>
+                        <td>Administrative skills, Bilingual (FR/EN)</td>
+                        <td>$35,000-$45,000</td>
+                        <td>Year 2-3</td>
+                        <td>Scheduling, Customer service, Billing, Compliance</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Sales Coordinator</strong></td>
+                        <td>Sales experience, HVAC knowledge preferred</td>
+                        <td>$45,000-$60,000 + commission</td>
+                        <td>Year 3-4</td>
+                        <td>Lead generation, Estimates, Customer follow-up</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div class="highlight">
+                <p><strong>Minimum Viable Team for Profitability:</strong> CEO + 1 Lead Technician + 1 Apprentice = 3 people can generate $750,000+ annually</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2><span class="icon">📚</span> CEO Requirements & Qualifications</h2>
+            
+            <div class="warning">
+                <p><strong>Important Clarification:</strong> As CEO/business owner, you do NOT need technical HVAC certifications yourself - you need business competency and qualified guarantors/employees with technical certifications.</p>
+            </div>
+            
+            <div class="grid">
+                <div class="card">
+                    <h3>Business License Requirements</h3>
+                    <p><strong>RBQ License Required:</strong></p>
+                    <p>• Business registration (NEQ number)</p>
+                    <p>• RBQ contractor license with appropriate subclasses</p>
+                    <p>• License security/bond ($20,000 for specialized)</p>
+                    <p>• Qualified guarantors for technical competency</p>
+                    <p><strong>NOT Required for CEO:</strong></p>
+                    <p>• Personal HVAC certifications</p>
+                    <p>• Gas technician licenses (unless working hands-on)</p>
+                </div>
+                
+                <div class="card">
+                    <h3>Guarantor System</h3>
+                    <p><strong>You need qualified guarantors for:</strong></p>
+                    <p>• Administration and business management</p>
+                    <p>• Construction site safety management</p>
+                    <p>• Project and site management</p>
+                    <p>• Carrying out construction work (technical)</p>
+                    <p><strong>Key Point:</strong> A Lead Technician can serve as technical guarantor while you handle business guarantor role</p>
+                </div>
+                
+                <div class="card">
+                    <h3>CEO Competency Requirements</h3>
+                    <p><strong>Business Management:</strong></p>
+                    <p>• Pass RBQ business administration exam OR</p>
+                    <p>• Complete recognized training program OR</p>
+                    <p>• Demonstrate equivalent experience</p>
+                    <p><strong>Additional:</strong></p>
+                    <p>• French language proficiency (Quebec operations)</p>
+                    <p>• Clean criminal record</p>
+                    <p>• Financial solvency</p>
+                </div>
+                
+                <div class="card">
+                    <h3>Financial Requirements</h3>
+                    <p><strong>Personal Investment:</strong> $50,000-$75,000</p>
+                    <p><strong>Access to Capital:</strong> $150,000-$200,000 total</p>
+                    <p><strong>License Security:</strong> $20,000 bond</p>
+                    <p><strong>Credit Requirements:</strong> Good personal/business credit</p>
+                    <p><strong>Cash Reserve:</strong> 6 months operating expenses</p>
+                </div>
+            </div>
+            
+            <div class="highlight">
+                <p><strong>Smart Strategy:</strong> Start by hiring a certified Lead Technician as your technical guarantor and focus on business development, sales, and management. This is much faster and more cost-effective than obtaining all technical certifications yourself.</p>
+            </div>
+            
+            <div class="steps">
+                <div class="step">
+                    <h3>Business Registration & Setup</h3>
+                    <p>Register business in Quebec, obtain NEQ number, choose appropriate legal structure (sole proprietorship, corporation, partnership).</p>
+                </div>
+                
+                <div class="step">
+                    <h3>Identify & Hire Technical Guarantor</h3>
+                    <p>Find experienced HVAC technician with C of Q and gas licenses to serve as technical guarantor. They handle technical competency requirements.</p>
+                </div>
+                
+                <div class="step">
+                    <h3>Pass Business Administration Exam</h3>
+                    <p>Complete RBQ business administration examination or equivalent recognized training program to serve as business guarantor.</p>
+                </div>
+                
+                <div class="step">
+                    <h3>Submit RBQ License Application</h3>
+                    <p>Apply for appropriate HVAC subclasses (15.1, 15.7, 15.10) with both business and technical guarantors in place.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2><span class="icon">🎯</span> Talent Acquisition & Retention Framework</h2>
+            
+            <h3>Strategic Talent Pipeline Development</h3>
+            
+            <div class="grid">
+                <div class="card">
+                    <h3>Education Partnership Program</h3>
+                    <p><strong>Tuition Sponsorship:</strong></p>
+                    <p>• Pay for HVAC trade school tuition ($8,000-$15,000)</p>
+                    <p>• Provide tools and safety equipment</p>
+                    <p>• Offer part-time work during training</p>
+                    <p><strong>Contract Terms:</strong> 3-year employment commitment</p>
+                </div>
+                
+                <div class="card">
+                    <h3>Apprenticeship Development</h3>
+                    <p><strong>Program Structure:</strong></p>
+                    <p>• Structured 4-year apprenticeship program</p>
+                    <p>• Progressive wage increases (60%-90% of journeyman rate)</p>
+                    <p>• Mentorship with senior technicians</p>
+                    <p>• Performance bonuses for certification milestones</p>
+                </div>
+                
+                <div class="card">
+                    <h3>Recruitment Sources</h3>
+                    <p><strong>Primary Channels:</strong></p>
+                    <p>• Partnership with École de technologie supérieure</p>
+                    <p>• Cégep du Vieux Montréal HVAC programs</p>
+                    <p>• Industry job fairs and trade associations</p>
+                    <p>• Employee referral program ($2,000 bonus)</p>
+                </div>
+                
+                <div class="card">
+                    <h3>Retention Incentives</h3>
+                    <p><strong>Compensation Package:</strong></p>
+                    <p>• Competitive base salary + performance bonuses</p>
+                    <p>• Comprehensive benefits (health, dental, RRSP)</p>
+                    <p>• Continuing education allowance ($2,000/year)</p>
+                    <p>• Profit-sharing program (2% of annual profits)</p>
+                </div>
+            </div>
+            
+            <h3>Talent Retention Strategy</h3>
+            <table class="financial-table">
+                <thead>
+                    <tr>
+                        <th>Retention Tool</th>
+                        <th>Investment Required</th>
+                        <th>Expected ROI</th>
+                        <th>Implementation Timeline</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Tuition Reimbursement Program</td>
+                        <td>$15,000/employee</td>
+                        <td>300% (vs hiring experienced)</td>
+                        <td>Year 1</td>
+                    </tr>
+                    <tr>
+                        <td>Professional Development Fund</td>
+                        <td>$2,000/employee/year</td>
+                        <td>150% (reduced turnover)</td>
+                        <td>Year 2</td>
+                    </tr>
+                    <tr>
+                        <td>Performance Bonus Program</td>
+                        <td>3-5% of revenue</td>
+                        <td>200% (increased productivity)</td>
+                        <td>Year 1</td>
+                    </tr>
+                    <tr>
+                        <td>Equity Participation Plan</td>
+                        <td>2-5% company equity</td>
+                        <td>400%+ (long-term retention)</td>
+                        <td>Year 3-5</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="section">
+            <h2><span class="icon">📈</span> Scalability Framework</h2>
+            
+            <h3>Growth Phase Strategy</h3>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <h3>Phase 1: Foundation (Years 1-2) - $350K-$525K Revenue</h3>
+                    <p><strong>Team:</strong> CEO + 1 Lead Tech + 1 Apprentice</p>
+                    <p><strong>Focus:</strong> Establish reputation, build customer base, perfect processes</p>
+                    <p><strong>Geography:</strong> Central Montreal residential market</p>
+                    <p><strong>Services:</strong> Service/repair (70%), basic installations (30%)</p>
+                </div>
+                
+                <div class="timeline-item">
+                    <h3>Phase 2: Expansion (Years 2-3) - $525K-$750K Revenue</h3>
+                    <p><strong>Team:</strong> Add 1 Technician + Administrative Assistant</p>
+                    <p><strong>Focus:</strong> Geographic expansion, maintenance contracts</p>
+                    <p><strong>Geography:</strong> Greater Montreal area (Laval, South Shore)</p>
+                    <p><strong>Services:</strong> Add commercial service, preventive maintenance</p>
+                </div>
+                
+                <div class="timeline-item">
+                    <h3>Phase 3: Diversification (Years 3-4) - $750K-$950K Revenue</h3>
+                    <p><strong>Team:</strong> Add Sales Coordinator + 2nd Apprentice</p>
+                    <p><strong>Focus:</strong> Commercial installations, specialized services</p>
+                    <p><strong>Geography:</strong> Regional expansion (Longueuil, Terrebonne)</p>
+                    <p><strong>Services:</strong> Commercial HVAC, indoor air quality, energy audits</p>
+                </div>
+                
+                <div class="timeline-item">
+                    <h3>Phase 4: Optimization (Years 4-5) - $950K-$1.2M Revenue</h3>
+                    <p><strong>Team:</strong> Add Project Manager + Specialist Technician</p>
+                    <p><strong>Focus:</strong> Large commercial projects, operational efficiency</p>
+                    <p><strong>Geography:</strong> Regional market leadership</p>
+                    <p><strong>Services:</strong> Design-build, energy management, 24/7 service</p>
+                </div>
+                
+                <div class="timeline-item">
+                    <h3>Phase 5: Strategic Growth (Year 5+) - $1.2M+ Revenue</h3>
+                    <p><strong>Options:</strong> Franchise model, acquisition, multiple locations</p>
+                    <p><strong>Considerations:</strong> Exit strategy, succession planning, regional expansion</p>
+                </div>
+            </div>
+            
+            <h3>Scalability Metrics & Triggers</h3>
+            <table class="financial-table">
+                <thead>
+                    <tr>
+                        <th>Growth Metric</th>
+                        <th>Trigger Point</th>
+                        <th>Action Required</th>
+                        <th>Investment Needed</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Service Backlog</td>
+                        <td>2+ weeks scheduling delay</td>
+                        <td>Hire additional technician</td>
+                        <td>$75,000 salary + $15,000 equipment</td>
+                    </tr>
+                    <tr>
+                        <td>Geographic Demand</td>
+                        <td>20+ monthly calls outside core area</td>
+                        <td>Establish satellite location</td>
+                        <td>$50,000 setup + $10,000/month operating</td>
+                    </tr>
+                    <tr>
+                        <td>Administrative Burden</td>
+                        <td>CEO spending 30%+ time on admin</td>
+                        <td>Hire administrative support</td>
+                        <td>$40,000 salary + office setup</td>
+                    </tr>
+                    <tr>
+                        <td>Large Project Opportunities</td>
+                        <td>$100K+ projects becoming available</td>
+                        <td>Add project management capability</td>
+                        <td>$65,000 salary + bonding increase</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div class="highlight">
+                <p><strong>Scalability Success Factors:</strong></p>
+                <p>• <strong>Systems First:</strong> Invest in scalable processes and technology before adding staff</p>
+                <p>• <strong>Quality Control:</strong> Maintain service standards as you grow</p>
+                <p>• <strong>Financial Discipline:</strong> Ensure each growth phase is profitable before expanding</p>
+                <p>• <strong>Talent Pipeline:</strong> Always recruit ahead of immediate needs</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2><span class="icon">🎯</span> Success Factors & Recommendations</h2>
+            
+            <div class="highlight">
+                <p><strong>Critical Success Factors:</strong></p>
+            </div>
+            
+            <div class="grid">
+                <div class="card">
+                    <h3>Quality & Reliability</h3>
+                    <p>• Ensure all work meets or exceeds Quebec building codes</p>
+                    <p>• Use quality equipment and materials</p>
+                    <p>• Provide comprehensive warranties</p>
+                </div>
+                
+                <div class="card">
+                    <h3>Customer Service Excellence</h3>
+                    <p>• 24/7 emergency service availability</p>
+                    <p>• Clear communication and fair pricing</p>
+                    <p>• Follow-up and customer satisfaction surveys</p>
+                </div>
+                
+                <div class="card">
+                    <h3>Operational Efficiency</h3>
+                    <p>• Invest in quality management software</p>
+                    <p>• Maintain optimal inventory levels</p>
+                    <p>• Develop standardized processes</p>
+                </div>
+                
+                <div class="card">
+                    <h3>Financial Management</h3>
+                    <p>• Maintain healthy cash flow</p>
+                    <p>• Monitor key performance indicators</p>
+                    <p>• Plan for seasonal variations</p>
+                </div>
+            </div>
+            
+            <div class="warning">
+                <p><strong>Final Recommendation:</strong> Start with a conservative approach focusing on residential service and repairs. As you build reputation and cash flow, gradually expand into commercial work and installations. The Montreal HVAC market offers excellent long-term potential with proper execution and patient capital investment.</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
